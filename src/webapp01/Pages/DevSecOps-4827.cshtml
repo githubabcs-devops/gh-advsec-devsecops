@@ -1,0 +1,127 @@
+@page
+@model DevSecOps4827Model
+@{
+    ViewData["Title"] = "DevSecOps Demo - GitHub Advanced Security Latest News";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-5 text-primary mb-4">@ViewData["Title"]</h1>
+            <p class="lead">Stay updated with the latest GitHub Advanced Security features and best practices</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- News Articles Section -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GHAS News & Updates
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="news-item mb-4">
+                        <h5 class="card-title text-dark">
+                            <span class="badge bg-danger">BREAKING</span> Code Scanning API Enhancements
+                        </h5>
+                        <p class="text-muted small">January 2026</p>
+                        <p>
+                            GitHub has released significant improvements to the Code Scanning API, enabling developers to 
+                            programmatically manage code scanning results, custom patterns, and automated remediation workflows. 
+                            These enhancements provide greater control over security processes and enable integration with 
+                            enterprise DevSecOps platforms.
+                        </p>
+                    </div>
+
+                    <hr />
+
+                    <div class="news-item mb-4">
+                        <h5 class="card-title text-dark">
+                            <span class="badge bg-success">NEW</span> Supply Chain Security Dashboard
+                        </h5>
+                        <p class="text-muted small">January 2026</p>
+                        <p>
+                            The new Supply Chain Security Dashboard provides a comprehensive view of your organization's 
+                            dependency vulnerabilities, including real-time alerts, automated updates, and detailed impact 
+                            analysis. This unified view helps security teams prioritize remediation efforts across all repositories.
+                        </p>
+                    </div>
+
+                    <hr />
+
+                    <div class="news-item mb-4">
+                        <h5 class="card-title text-dark">
+                            <span class="badge bg-info">FEATURE</span> Secret Scanning Custom Patterns in GHEC
+                        </h5>
+                        <p class="text-muted small">January 2026</p>
+                        <p>
+                            Enterprises can now define custom secret patterns for Secret Scanning, allowing detection of 
+                            organization-specific credentials and sensitive data. This extends GHAS capabilities to cover 
+                            proprietary authentication schemes and internal security requirements.
+                        </p>
+                    </div>
+
+                    <hr />
+
+                    <div class="news-item">
+                        <h5 class="card-title text-dark">
+                            <span class="badge bg-warning text-dark">UPDATE</span> Dependency Graph Improvements
+                        </h5>
+                        <p class="text-muted small">January 2026</p>
+                        <p>
+                            Enhanced dependency analysis now supports additional package managers and provides deeper 
+                            insights into transitive dependencies. The Dependency Graph is now significantly faster, 
+                            enabling real-time vulnerability detection for large repositories.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices Card -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-shield-lock"></i> Security Best Practices
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Enable Code Scanning</strong> - Use CodeQL or third-party tools to detect security issues early
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Review Dependabot Alerts</strong> - Promptly address vulnerable dependencies
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Implement Secret Scanning</strong> - Prevent accidental credential exposure
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Use Branch Protection Rules</strong> - Enforce security checks before merging
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Monitor Security Dashboard</strong> - Track and manage security metrics organization-wide
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .news-item {
+        padding: 0.5rem 0;
+    }
+    
+    .news-item h5 {
+        margin-bottom: 0.5rem;
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+</style>
