@@ -1,0 +1,358 @@
+@page
+@model DevSecOps2649Model
+@{
+    ViewData["Title"] = "DevSecOps Demo 2649 - Latest GHAS Features";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Explore the newest GitHub Advanced Security features and security demonstrations</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for Log Results -->
+    @if (TempData["LogResult"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["LogResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["RegexTestResult"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["RegexTestResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Main Content Area -->
+        <div class="col-lg-8">
+            <!-- Latest GHAS News Section -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-gradient bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GitHub Advanced Security Updates (2024-2026)
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.LatestSecurityNews.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var news in Model.LatestSecurityNews)
+                            {
+                                <div class="list-group-item border-start border-primary border-4">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1 text-primary">
+                                            <span class="badge bg-success me-2">NEW</span>
+                                            <strong>@news.Title</strong>
+                                        </h6>
+                                        <small class="text-muted">@news.Date</small>
+                                    </div>
+                                    <p class="mb-1">@news.Description</p>
+                                    <small class="text-muted">Category: @news.Category</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No security updates available.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Advanced GHAS Capabilities -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-gear-fill"></i> Advanced GHAS Capabilities
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="ghasFeatures">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCodeQL">
+                                    <i class="bi bi-code-slash me-2"></i> CodeQL Analysis
+                                </button>
+                            </h2>
+                            <div id="collapseCodeQL" class="accordion-collapse collapse show" data-bs-parent="#ghasFeatures">
+                                <div class="accordion-body">
+                                    <strong>Semantic Code Analysis Engine</strong> - CodeQL treats code as data, allowing complex security queries across your entire codebase. 
+                                    Supports 15+ languages including C/C++, C#, Java, JavaScript/TypeScript, Python, Go, and Ruby.
+                                    <ul class="mt-2">
+                                        <li>Custom query development for organization-specific patterns</li>
+                                        <li>AI-assisted query generation with GitHub Copilot</li>
+                                        <li>Real-time analysis in pull requests</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSecret">
+                                    <i class="bi bi-shield-lock me-2"></i> Advanced Secret Scanning
+                                </button>
+                            </h2>
+                            <div id="collapseSecret" class="accordion-collapse collapse" data-bs-parent="#ghasFeatures">
+                                <div class="accordion-body">
+                                    <strong>Multi-layer Secret Detection</strong> - Protects against credential exposure with advanced pattern matching.
+                                    <ul class="mt-2">
+                                        <li>250+ partner patterns for cloud providers and services</li>
+                                        <li>Custom pattern support for proprietary secrets</li>
+                                        <li>Push protection to prevent secrets from entering repositories</li>
+                                        <li>Historical scanning of entire repository history</li>
+                                        <li>Automatic partner notifications for validated leaks</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDependency">
+                                    <i class="bi bi-box-seam me-2"></i> Supply Chain Security
+                                </button>
+                            </h2>
+                            <div id="collapseDependency" class="accordion-collapse collapse" data-bs-parent="#ghasFeatures">
+                                <div class="accordion-body">
+                                    <strong>Comprehensive Dependency Management</strong> - Identify and remediate vulnerabilities in your software supply chain.
+                                    <ul class="mt-2">
+                                        <li>Automated dependency updates via Dependabot</li>
+                                        <li>Vulnerability alerts with CVE details and remediation</li>
+                                        <li>License compliance tracking</li>
+                                        <li>Dependency review in pull requests</li>
+                                        <li>SBOM (Software Bill of Materials) generation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Demos -->
+        <div class="col-lg-4">
+            <!-- Vulnerability Demo Card -->
+            <div class="card mb-4 shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-bug-fill"></i> Security Vulnerability Demo
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert">
+                        <strong><i class="bi bi-exclamation-triangle-fill"></i> Warning!</strong><br>
+                        This page contains intentionally insecure code for educational purposes.
+                    </div>
+
+                    <!-- Log Injection Demo -->
+                    <form method="post" asp-page-handler="TestLogForging" class="mb-3">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">
+                                <i class="bi bi-person"></i> Log Forging Demo:
+                            </label>
+                            <input type="text" class="form-control form-control-sm" id="username" 
+                                   name="username" placeholder="Enter username">
+                            <div class="form-text">
+                                ⚠️ Demonstrates log injection vulnerability
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                            <i class="bi bi-play-fill"></i> Test Log Forging
+                        </button>
+                    </form>
+
+                    <hr>
+
+                    <!-- ReDoS Demo -->
+                    <form method="post" asp-page-handler="TestRegexVulnerability" class="mb-3">
+                        <div class="mb-3">
+                            <label for="regexInput" class="form-label">
+                                <i class="bi bi-regex"></i> ReDoS Attack Demo:
+                            </label>
+                            <input type="text" class="form-control form-control-sm" id="regexInput" 
+                                   name="regexInput" placeholder="Try: aaaaaaaaaaaaaaaaaaa!">
+                            <div class="form-text">
+                                ⚠️ Vulnerable regex: <code>^(a+)+$</code>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm w-100">
+                            <i class="bi bi-clock"></i> Test ReDoS Pattern
+                        </button>
+                    </form>
+
+                    <hr>
+
+                    <!-- SQL Injection Info -->
+                    <div class="mt-3">
+                        <h6 class="text-danger">
+                            <i class="bi bi-database-fill-x"></i> Hardcoded Credentials
+                        </h6>
+                        <p class="small text-muted">
+                            This page's backend contains hardcoded database credentials that should be detected by GHAS secret scanning.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Card -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-graph-up"></i> GHAS Impact Stats
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6 border-end">
+                            <h3 class="text-primary">@Model.VulnerabilitiesDetected</h3>
+                            <small class="text-muted">Vulnerabilities<br>Detected</small>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="text-success">@Model.AlertsResolved</h3>
+                            <small class="text-muted">Alerts<br>Resolved</small>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row text-center">
+                        <div class="col-6 border-end">
+                            <h3 class="text-warning">@Model.SecretsFound</h3>
+                            <small class="text-muted">Secrets<br>Found</small>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="text-info">@Model.DependencyAlerts</h3>
+                            <small class="text-muted">Dependency<br>Alerts</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Card -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-book"></i> Learning Resources
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="https://docs.github.com/en/enterprise-cloud@latest/code-security" 
+                           class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="bi bi-file-text"></i> GHAS Documentation
+                        </a>
+                        <a href="https://github.blog/category/security/" 
+                           class="btn btn-outline-info btn-sm" target="_blank">
+                            <i class="bi bi-newspaper"></i> Security Blog
+                        </a>
+                        <a href="https://codeql.github.com/" 
+                           class="btn btn-outline-success btn-sm" target="_blank">
+                            <i class="bi bi-code-square"></i> CodeQL Docs
+                        </a>
+                        <a href="https://github.com/advanced-security" 
+                           class="btn btn-outline-warning btn-sm" target="_blank">
+                            <i class="bi bi-github"></i> GHAS Resources
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Practices Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-check-circle-fill"></i> DevSecOps Best Practices with GHAS
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-1-circle-fill text-primary"></i> Shift Left Security</h6>
+                            <p class="small">Integrate security scanning early in the development lifecycle, enabling developers to identify and fix vulnerabilities before they reach production.</p>
+                            
+                            <h6><i class="bi bi-2-circle-fill text-primary"></i> Automated Security Gates</h6>
+                            <p class="small">Implement automated checks in CI/CD pipelines to block PRs with critical vulnerabilities or exposed secrets.</p>
+
+                            <h6><i class="bi bi-3-circle-fill text-primary"></i> Developer Training</h6>
+                            <p class="small">Use GHAS findings as teaching moments to improve team security awareness and coding practices.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-4-circle-fill text-success"></i> Custom Security Policies</h6>
+                            <p class="small">Create organization-specific CodeQL queries to detect patterns unique to your codebase and compliance requirements.</p>
+
+                            <h6><i class="bi bi-5-circle-fill text-success"></i> Continuous Monitoring</h6>
+                            <p class="small">Enable real-time security scanning on all branches to catch issues immediately as code is committed.</p>
+
+                            <h6><i class="bi bi-6-circle-fill text-success"></i> Incident Response</h6>
+                            <p class="small">Leverage security advisories and automated notifications to rapidly respond to newly disclosed vulnerabilities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Footer -->
+    <div class="row mt-4 mb-4">
+        <div class="col-12">
+            <div class="alert alert-primary" role="alert">
+                <h5 class="alert-heading">
+                    <i class="bi bi-info-circle-fill"></i> About This Demo Page
+                </h5>
+                <p>
+                    This DevSecOps demo page (ID: 2649) showcases the power of GitHub Advanced Security by deliberately 
+                    including security anti-patterns and vulnerabilities. When GHAS code scanning is enabled, it will 
+                    automatically detect and alert on these issues, demonstrating the platform's capability to identify:
+                </p>
+                <ul>
+                    <li><strong>Log Injection/Forging:</strong> Unsanitized user input in log statements</li>
+                    <li><strong>Regular Expression Denial of Service (ReDoS):</strong> Vulnerable regex patterns</li>
+                    <li><strong>Hardcoded Secrets:</strong> Embedded credentials and API keys</li>
+                    <li><strong>SQL Injection:</strong> Unsafe database query construction</li>
+                    <li><strong>Insecure Deserialization:</strong> Vulnerable JSON handling</li>
+                </ul>
+                <hr>
+                <p class="mb-0">
+                    <strong>Note:</strong> All vulnerabilities on this page are intentional and for demonstration purposes only. 
+                    Never deploy code with these patterns to production environments.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Auto-dismiss alerts after 8 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(alert => {
+                if (bootstrap && bootstrap.Alert) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
+            });
+        }, 8000);
+
+        // Add smooth scrolling to anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+}
