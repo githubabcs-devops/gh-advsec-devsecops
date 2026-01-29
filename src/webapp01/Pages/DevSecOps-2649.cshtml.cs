@@ -27,7 +27,6 @@ namespace webapp01.Pages
         // SECURITY VULNERABILITY: Vulnerable regex pattern susceptible to ReDoS (Regular Expression Denial of Service)
         // This pattern has exponential time complexity with nested quantifiers
         private static readonly Regex InsecureRegexPattern = new Regex(@"^(a+)+$", RegexOptions.Compiled);
-        private static readonly Regex EmailValidationRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.Compiled);
 
         public DevSecOps2649Model(ILogger<DevSecOps2649Model> logger)
         {
@@ -113,6 +112,7 @@ namespace webapp01.Pages
 
             // SECURITY VULNERABILITY: Potential insecure deserialization
             // Serializing and deserializing without type validation
+            // Note: deserializedNews is intentionally unused - this code exists purely for GHAS to detect the vulnerability pattern
             try
             {
                 string jsonData = JsonConvert.SerializeObject(LatestSecurityNews);
@@ -238,6 +238,7 @@ namespace webapp01.Pages
         }
 
         // Additional vulnerable method for SQL injection demonstration
+        // NOTE: This method is intentionally unused - it exists purely for GHAS code scanning to detect the SQL injection vulnerability pattern
         private List<string> GetUserDataUnsafe(string userId)
         {
             // SECURITY VULNERABILITY: SQL Injection vulnerability
