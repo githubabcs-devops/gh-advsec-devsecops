@@ -10,7 +10,7 @@
 >
 > **Discover how GitHub Advanced Security and DevSecOps guidelines empower teams to build, secure, and ship software faster.**
 
-![image](https://github.com/user-attachments/assets/945085e8-c403-4c20-a1ab-3bf3acf9de2e)
+<img width="3224" height="1818" alt="Agentic AI for DevSecOps - Transforming Security with GHAS and GHCP" src="https://github.com/user-attachments/assets/5aa8b864-712a-4c52-858c-3224079e0810" />
 
 </div>
 
