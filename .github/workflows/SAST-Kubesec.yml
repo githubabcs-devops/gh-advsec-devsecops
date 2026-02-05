@@ -34,8 +34,25 @@ jobs:
           output: kubesec-results.sarif
           exit-code: "0"
 
+      - name: Validate SARIF file
+        id: validate
+        run: |
+          if [ -f kubesec-results.sarif ] && [ -s kubesec-results.sarif ]; then
+            # Check if the SARIF has valid runs array with at least one result
+            if jq -e '.runs | length > 0' kubesec-results.sarif > /dev/null 2>&1; then
+              echo "valid=true" >> $GITHUB_OUTPUT
+            else
+              echo "SARIF file has no runs, skipping upload"
+              echo "valid=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "SARIF file is empty or missing, skipping upload"
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload Kubesec scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        if: steps.validate.outputs.valid == 'true'
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: kubesec-results.sarif
       
@@ -55,7 +72,24 @@ jobs:
           output: kubesec-results.sarif
           exit-code: "0"
 
+      - name: Validate SARIF file
+        id: validate
+        run: |
+          if [ -f kubesec-results.sarif ] && [ -s kubesec-results.sarif ]; then
+            # Check if the SARIF has valid runs array with at least one result
+            if jq -e '.runs | length > 0' kubesec-results.sarif > /dev/null 2>&1; then
+              echo "valid=true" >> $GITHUB_OUTPUT
+            else
+              echo "SARIF file has no runs, skipping upload"
+              echo "valid=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "SARIF file is empty or missing, skipping upload"
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload Kubesec scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        if: steps.validate.outputs.valid == 'true'
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: kubesec-results.sarif

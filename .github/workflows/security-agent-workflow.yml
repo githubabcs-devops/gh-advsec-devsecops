@@ -1,0 +1,99 @@
+# Security Agent Workflow
+# Original author: Elio Struyf
+# Reference: https://www.eliostruyf.com/custom-security-agent-github-copilot-actions/
+
+name: Security Agent Workflow
+
+on:
+    workflow_dispatch:
+
+jobs:
+    security-assessment:
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        permissions:
+            contents: read
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install GitHub Copilot CLI
+              run: npm i -g @github/copilot
+
+            - name: Run Security Agent via Copilot CLI
+              env:
+                  COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+                  GITHUB_REPOSITORY: ${{ github.repository }}
+              run: |
+                  set -euo pipefail
+                  
+                  # Verify agent file exists
+                  if [ ! -f ".github/agents/security-agent.md" ]; then
+                    echo "Error: Security agent file not found"
+                    exit 1
+                  fi
+                  
+                  AGENT_PROMPT=$(cat .github/agents/security-agent.md)
+                  PROMPT="$AGENT_PROMPT"
+                  PROMPT+=$'\n\nContext:\n'
+                  PROMPT+="- Repository: $GITHUB_REPOSITORY"
+                  PROMPT+=$'\n\nTask:\n'
+                  PROMPT+="- Execute the instructions on the full codebase"
+                  PROMPT+="- Generate the security report at security-reports/security-assessment-report.md summarizing findings, severity, and remediation guidance."
+                  PROMPT+=$'\n\nIMPORTANT: Complete the analysis and save the report file. Do not wait for user input.'
+
+                  # Run with timeout to prevent hanging
+                  timeout 600 copilot --prompt "$PROMPT" --allow-all-tools --allow-all-paths < /dev/null || {
+                    exit_code=$?
+                    if [ $exit_code -eq 124 ]; then
+                      echo "Warning: Copilot CLI timed out after 10 minutes"
+                    fi
+                    # Continue even if copilot exits non-zero, report may still be generated
+                    echo "Copilot CLI exited with code: $exit_code"
+                  }
+
+            - name: Output security report as summary
+              if: always()
+              run: |
+                  set -euo pipefail
+                  REPORT_PATH="security-reports/security-assessment-report.md"
+
+                  if [ ! -f "$REPORT_PATH" ]; then
+                    echo "No security report generated; skipping summary."
+                    exit 0
+                  fi
+
+                  echo "## Security Assessment Report" >> $GITHUB_STEP_SUMMARY
+                  cat "$REPORT_PATH" >> $GITHUB_STEP_SUMMARY
+
+            - name: Upload security report artifact
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: security-assessment-report-${{ github.run_id }}
+                  path: security-reports/security-assessment-report.md
+                  retention-days: 30
+
+            - name: Check for critical vulnerabilities
+              if: always()
+              run: |
+                  set -euo pipefail
+                  REPORT_PATH="security-reports/security-assessment-report.md"
+
+                  if [ ! -f "$REPORT_PATH" ]; then
+                    echo "No security report generated; skipping critical check."
+                    exit 0
+                  fi
+
+                  if grep -q "THIS ASSESSMENT CONTAINS A CRITICAL VULNERABILITY" "$REPORT_PATH"; then
+                    echo "❌ CRITICAL VULNERABILITY DETECTED - Workflow failed"
+                    echo "The security assessment found critical vulnerabilities that must be addressed before proceeding."
+                    exit 1
+                  else
+                    echo "✅ No critical vulnerabilities detected"
+                  fi

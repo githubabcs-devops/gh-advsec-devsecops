@@ -13,8 +13,8 @@ param webAppName string
 @description('The location for all resources')
 param location string
 
-@description('The container image to deploy')
-param containerImage string
+@description('The container image name without registry prefix (e.g., webapp01:latest)')
+param containerImageName string = 'webapp01:latest'
 
 // Deploy the Azure Container Registry
 resource acr 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
@@ -24,7 +24,7 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
     name: acrSku
   }
   properties: {
-    adminUserEnabled: true
+    adminUserEnabled: false // Use managed identity instead
   }
 }
 
@@ -54,18 +54,11 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
+      acrUseManagedIdentityCreds: true // Use managed identity for ACR authentication
       appSettings: [
         {
           name: 'DOCKER_REGISTRY_SERVER_URL'
-          value: 'https://${acr.name}.azurecr.io'
-        }
-        {
-          name: 'DOCKER_REGISTRY_SERVER_USERNAME'
-          value: acr.properties.loginServer
-        }
-        {
-          name: 'DOCKER_REGISTRY_SERVER_PASSWORD'
-          value: acr.listCredentials().passwords[0].value
+          value: 'https://${acr.properties.loginServer}'
         }
         {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
@@ -73,10 +66,26 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' = {
         }
         {
           name: 'DOCKER_CUSTOM_IMAGE_NAME'
-          value: containerImage
+          value: '${acr.properties.loginServer}/${containerImageName}'
         }
       ]
-      linuxFxVersion: 'DOCKER|${containerImage}' // Specify the container image
+      linuxFxVersion: 'DOCKER|${acr.properties.loginServer}/${containerImageName}'
     }
   }
 }
+
+// Assign AcrPull role to the Web App's managed identity
+resource acrPullRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(acr.id, webApp.id, 'AcrPull')
+  scope: acr
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d') // AcrPull role ID
+    principalId: webApp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+output webAppName string = webApp.name
+output webAppUrl string = 'https://${webApp.properties.defaultHostName}'
+output acrLoginServer string = acr.properties.loginServer
+output webAppPrincipalId string = webApp.identity.principalId
