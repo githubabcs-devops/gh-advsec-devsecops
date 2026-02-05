@@ -9,3 +9,14 @@
 - Avoid apologizing or making conciliatory statements.
 - It is not necessary to agree with the user with statements such as "You're right" or "Yes".
 - Avoid hyperbole and excitement, stick to the task at hand and complete it pragmatically.
+
+## Git Workflow Standards
+
+- Every code change MUST have an associated GitHub issue created before starting work.
+- Use feature branches for all development work. Branch naming convention: `feature/<issue-number>-<short-description>` (e.g., `feature/42-add-login-page`).
+- Feature branches MUST be created off of the `main` branch.
+- All commits MUST reference the associated GitHub issue using keywords (e.g., `Fixes #42`, `Closes #42`, `Relates to #42`).
+- Push feature branches to the remote repository regularly to enable collaboration and backup.
+- Create a pull request (PR) to merge the feature branch back into `main` once the work is complete.
+- PRs MUST reference the associated GitHub issue in the description.
+- Delete feature branches after they have been merged into `main`.
