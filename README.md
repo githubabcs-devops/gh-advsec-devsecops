@@ -6,7 +6,9 @@
 [![Copilot](https://img.shields.io/badge/GitHub-Copilot-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/features/copilot)
 [![DevSecOps](https://img.shields.io/badge/DevSecOps-Enabled-success?style=for-the-badge)](https://github.com/security)
 
-> **Experience how Agentic AI and GitHub Copilot are transforming DevSecOps.**
+> **Agentic DevSecOps is essential for building secure AI apps and agents.**
+> 
+> **Transforming Security with GHAS & GHCP & MDC**
 >
 > **Discover how GitHub Advanced Security and DevSecOps guidelines empower teams to build, secure, and ship software faster.**
 
@@ -68,5 +70,3 @@ Boost visibility between security and development teams by integrating GHAS with
 > **⚡ DevSecOps is essential for modern software delivery.**
 
 > **🛡️ GitHub Advanced Security (GHAS) embeds security natively into developer workflows.**
-
-> **🧠 AI and automation (Copilot, Autofix) accelerate vulnerability remediation and developer education.** 
