@@ -53,7 +53,7 @@ jobs:
       webapp_url: ${{ steps.deploy.outputs.webapp_url }}
       resource_group: ${{ steps.deploy.outputs.resource_group }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Azure Login
         uses: azure/login@v2
@@ -158,11 +158,11 @@ jobs:
       AZURE_WEBAPP_NAME: ${{ needs.deploy-infrastructure.outputs.webapp_name }}
     steps:
       # Checkout the repo
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # Setup .NET Core SDK
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -179,14 +179,6 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      # Deploy to Azure Web apps
-      - name: "Run Azure webapp deploy action using publish profile credentials"
-        if: false # This disables the action
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
-          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/webapp01/bin/publish"
 
       - name: ACR Login via OIDC
         run: az acr login --name ${{ env.AZURE_ACR_NAME }}
@@ -211,7 +203,7 @@ jobs:
   # https://docs.github.com/en/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-and-reusable-workflows-to-achieve-slsa-v1-build-level-3
   container-build-publish:
     name: Build and Publish Container Image
-    uses: githubabcs-devops/devsecops-reusable-workflows/.github/workflows/container.yml@main
+    uses: githubabcs-devops/devsecops-reusable-workflows/.github/workflows/container.yml@129a993cd2ab88cdee5c954ea35d832be5b17148
     with:
       # This is used for tagging the container image
       version: v1.0.0

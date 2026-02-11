@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Run kubesec scanner (critical-double.yaml)
         uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14
@@ -55,13 +55,14 @@ jobs:
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: kubesec-results.sarif
+          category: kubesec-scan-1
       
   kubesec-scan-2:
     name: Kubesec Scan 2
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Run kubesec scanner (score-5-pod-serviceaccount.yaml)
         uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14
@@ -93,3 +94,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: kubesec-results.sarif
+          category: kubesec-scan-2

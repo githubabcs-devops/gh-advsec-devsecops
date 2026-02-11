@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Build the Docker image
         run: docker build ./src/webapp01 --file ./src/webapp01/Dockerfile --tag ${{ env.imageName }}:${{ env.tag }}
