@@ -1,0 +1,181 @@
+@page
+@model DevSecOps7Model
+@{
+    ViewData["Title"] = "DevSecOps 7 - GitHub Advanced Security";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Explore the cutting-edge features and capabilities of GitHub Advanced Security (GHAS)</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for TempData messages -->
+    @if (TempData["RegexResult"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["RegexResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["RegexError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["RegexError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Latest GHAS News Section -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-shield-check"></i> Latest GitHub Advanced Security News
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.LatestNews.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var newsItem in Model.LatestNews)
+                            {
+                                <div class="list-group-item d-flex align-items-start">
+                                    <span class="badge bg-success rounded-pill me-3 mt-1">NEW</span>
+                                    <div>
+                                        <p class="mb-1">@newsItem</p>
+                                        <small class="text-muted">Updated: @DateTime.Now.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No news available at this time.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- GHAS Features Overview -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Core GHAS Features</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-search"></i> Code Scanning</h5>
+                            <p>Automated vulnerability detection using CodeQL semantic analysis engine.</p>
+                            
+                            <h5><i class="bi bi-key"></i> Secret Scanning</h5>
+                            <p>Detect and prevent secrets from being committed to repositories.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-layers"></i> Dependency Review</h5>
+                            <p>Understand security impact of dependency changes in pull requests.</p>
+                            
+                            <h5><i class="bi bi-graph-up"></i> Security Overview</h5>
+                            <p>Organization-wide security posture visibility and compliance tracking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Demo Tools -->
+        <div class="col-lg-4">
+            <!-- Security Demo Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Security Demo
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        This page contains intentionally vulnerable code for demonstration purposes.
+                        These vulnerabilities should be detected by GHAS code scanning.
+                    </p>
+                    
+                    <!-- Regex Testing Form -->
+                    <form method="post" asp-page-handler="TestRegex" class="mt-3">
+                        <div class="mb-3">
+                            <label for="pattern" class="form-label">Test Regex Pattern:</label>
+                            <input type="text" class="form-control" id="pattern" name="pattern" 
+                                   placeholder="Enter pattern (e.g., aaa)" value="aaa">
+                            <div class="form-text">
+                                ⚠️ This uses a vulnerable regex pattern susceptible to ReDoS attacks.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play"></i> Test Pattern
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="card-title mb-0">Quick Links</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="https://docs.github.com/en/code-security" class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="bi bi-book"></i> GHAS Documentation
+                        </a>
+                        <a href="https://github.com/github/codeql" class="btn btn-outline-secondary btn-sm" target="_blank">
+                            <i class="bi bi-github"></i> CodeQL Repository
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/about-code-scanning" class="btn btn-outline-success btn-sm" target="_blank">
+                            <i class="bi bi-shield-check"></i> Code Scanning Guide
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/secret-scanning" class="btn btn-outline-warning btn-sm" target="_blank">
+                            <i class="bi bi-key"></i> Secret Scanning
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-light" role="alert">
+                <h5 class="alert-heading">
+                    <i class="bi bi-lightbulb"></i> Pro Tip: 
+                </h5>
+                <p>
+                    Enable GitHub Advanced Security on your repositories to automatically detect the 
+                    security vulnerabilities demonstrated in this page's source code. GHAS will identify 
+                    issues like hardcoded credentials, vulnerable regex patterns, and potential log injection attacks.
+                </p>
+                <hr>
+                <p class="mb-0">
+                    Learn more about implementing a comprehensive DevSecOps strategy with 
+                    <a href="https://github.com/features/security" target="_blank">GitHub Advanced Security</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simple script to auto-dismiss alerts after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+}
