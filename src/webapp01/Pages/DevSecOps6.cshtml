@@ -1,0 +1,223 @@
+@page
+@model DevSecOps6Model
+@{
+    ViewData["Title"] = "DevSecOps6 - Container & Supply Chain Security";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Advanced container security, supply chain protection, and cloud-native DevSecOps practices</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for TempData messages -->
+    @if (TempData["SecurityDemoResult"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["SecurityDemoResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["SecurityDemoError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["SecurityDemoError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Container Security Section -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #0d6efd, #198754);">
+                    <h3 class="card-title mb-0 text-white">
+                        <i class="bi bi-boxes"></i> Container Security & Supply Chain Updates 2024
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.ContainerSecurityFeatures.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var feature in Model.ContainerSecurityFeatures)
+                            {
+                                <div class="list-group-item d-flex align-items-start">
+                                    <span class="badge bg-gradient text-white me-3 mt-1" style="background: linear-gradient(45deg, #dc3545, #fd7e14);">NEW</span>
+                                    <div>
+                                        <p class="mb-1">@feature</p>
+                                        <small class="text-muted">Enhanced container and cloud security capabilities</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No container security updates available.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Advanced Supply Chain Security -->
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">Supply Chain Security Portfolio</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-shield-shaded"></i> SBOM Generation</h5>
+                            <p>Automated Software Bill of Materials generation with vulnerability mapping and license compliance tracking.</p>
+                            
+                            <h5><i class="bi bi-fingerprint"></i> Artifact Signing</h5>
+                            <p>Cryptographic signing of container images and artifacts with Sigstore and Cosign integration.</p>
+                            
+                            <h5><i class="bi bi-graph-down-arrow"></i> Provenance Tracking</h5>
+                            <p>Complete build provenance documentation with SLSA framework compliance and attestation.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-cloud-check"></i> Cloud Security</h5>
+                            <p>Multi-cloud security posture management with infrastructure-as-code scanning and compliance.</p>
+                            
+                            <h5><i class="bi bi-layers"></i> Runtime Protection</h5>
+                            <p>Container runtime security monitoring with behavioral analysis and threat detection.</p>
+                            
+                            <h5><i class="bi bi-diagram-3"></i> Mesh Security</h5>
+                            <p>Service mesh security policies with zero-trust networking and encrypted communication.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Demo Sidebar -->
+        <div class="col-lg-4">
+            <!-- Container Security Demo Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-exclamation-octagon-fill"></i> Container Security Demo
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        This demonstration includes container and cloud security vulnerabilities for advanced GHAS testing.
+                        These patterns showcase supply chain and runtime security scanning.
+                    </p>
+                    
+                    <!-- Environment Variable Testing Form -->
+                    <form method="post" asp-page-handler="TestEnvironmentVariables" class="mt-3">
+                        <div class="mb-3">
+                            <label for="envVarName" class="form-label">Environment Variable:</label>
+                            <input type="text" class="form-control" id="envVarName" name="envVar" 
+                                   placeholder="Enter env var name" value="DATABASE_PASSWORD">
+                            <div class="form-text">Test environment variable exposure vulnerabilities</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="envValue" class="form-label">Environment Value:</label>
+                            <input type="text" class="form-control" id="envValue" name="envValue" 
+                                   placeholder="Enter env var value" value="supersecret123">
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-gear"></i> Test Environment Access
+                        </button>
+                    </form>
+
+                    <!-- Container Command Demo -->
+                    <form method="post" asp-page-handler="TestContainerCommand" class="mt-4">
+                        <div class="mb-3">
+                            <label for="containerCmd" class="form-label">Container Command:</label>
+                            <input type="text" class="form-control" id="containerCmd" name="command" 
+                                   placeholder="Enter container command" value="cat /etc/passwd">
+                            <div class="form-text">Demonstrates container escape vulnerabilities</div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-terminal"></i> Execute Container Command
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Cloud Security Resources -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-cloud-security"></i> Cloud Security Resources
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="https://docs.github.com/en/code-security/supply-chain-security" 
+                           class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="bi bi-link-45deg"></i> Supply Chain Security
+                        </a>
+                        <a href="https://docs.github.com/en/actions/deployment/security-hardening-your-deployments" 
+                           class="btn btn-outline-secondary btn-sm" target="_blank">
+                            <i class="bi bi-shield-lock"></i> Deployment Security
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/dependabot/dependabot-security-updates" 
+                           class="btn btn-outline-success btn-sm" target="_blank">
+                            <i class="bi bi-arrow-repeat"></i> Security Updates
+                        </a>
+                        <a href="https://docs.github.com/en/enterprise-cloud@latest/admin/code-security" 
+                           class="btn btn-outline-warning btn-sm" target="_blank">
+                            <i class="bi bi-building"></i> Enterprise Security
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/securing-your-organization" 
+                           class="btn btn-outline-info btn-sm" target="_blank">
+                            <i class="bi bi-people"></i> Organization Security
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Cloud & Container Features Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #198754, #20c997);">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-cloud-arrow-up"></i> Cloud-Native Security & DevSecOps Automation
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-primary">Infrastructure Security</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Infrastructure-as-Code scanning</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Cloud misconfigurations detection</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Kubernetes security policies</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Multi-cloud compliance monitoring</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-success">Container Security</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Image vulnerability scanning</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Runtime threat detection</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Container escape prevention</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Secrets management integration</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-warning">DevSecOps Automation</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Security-as-Code practices</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Automated compliance reporting</li>
+                                <li><i class="bi bi-check-circle text-success"></i> CI/CD security gates</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Security workflow orchestration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
