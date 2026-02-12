@@ -1,0 +1,235 @@
+@page
+@model DevSecOps7492Model
+@{
+    ViewData["Title"] = "DevSecOps Demo 7492 - GitHub Advanced Security";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Latest updates and features in GitHub Advanced Security</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert Section -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Latest GHAS News Section -->
+        <div class="col-lg-9">
+            <div class="card mb-4 shadow">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GitHub Advanced Security News - 2026
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.LatestGHASNews.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var newsItem in Model.LatestGHASNews)
+                            {
+                                <div class="list-group-item d-flex align-items-start border-0 py-3">
+                                    <span class="badge bg-success rounded-pill me-3 mt-1">LATEST</span>
+                                    <div class="flex-grow-1">
+                                        <p class="mb-2 fw-semibold">@newsItem</p>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar3"></i> @DateTime.Now.ToString("MMMM dd, yyyy")
+                                        </small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No news available at this time.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- GHAS Features Deep Dive -->
+            <div class="card mb-4 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-shield-shaded"></i> Advanced Security Features
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="feature-box p-3 border rounded">
+                                <h5 class="text-primary">
+                                    <i class="bi bi-code-slash"></i> CodeQL Analysis
+                                </h5>
+                                <p class="small">Advanced semantic code analysis engine that treats code as data to find vulnerabilities with high confidence and low false positives.</p>
+                                <ul class="small">
+                                    <li>300+ queries for 12+ languages</li>
+                                    <li>Custom query authoring support</li>
+                                    <li>CI/CD integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box p-3 border rounded">
+                                <h5 class="text-success">
+                                    <i class="bi bi-key-fill"></i> Secret Scanning
+                                </h5>
+                                <p class="small">Automatically detect and prevent exposure of secrets, tokens, and credentials across your codebase and commit history.</p>
+                                <ul class="small">
+                                    <li>200+ partner patterns</li>
+                                    <li>Custom pattern support</li>
+                                    <li>Real-time push protection</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box p-3 border rounded">
+                                <h5 class="text-warning">
+                                    <i class="bi bi-box-seam"></i> Dependency Security
+                                </h5>
+                                <p class="small">Monitor and manage open source dependencies with Dependabot alerts, security updates, and comprehensive vulnerability database.</p>
+                                <ul class="small">
+                                    <li>Automated security updates</li>
+                                    <li>Dependency review in PRs</li>
+                                    <li>License compliance tracking</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box p-3 border rounded">
+                                <h5 class="text-info">
+                                    <i class="bi bi-bar-chart-line"></i> Security Dashboard
+                                </h5>
+                                <p class="small">Organization-wide visibility into security posture with actionable insights, compliance reporting, and risk management.</p>
+                                <ul class="small">
+                                    <li>Centralized alert management</li>
+                                    <li>Compliance framework mapping</li>
+                                    <li>Risk-based prioritization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI-Powered Security -->
+            <div class="card mb-4 shadow">
+                <div class="card-header bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h3 class="card-title mb-0 text-white">
+                        <i class="bi bi-robot"></i> GitHub Copilot for Security
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">AI-powered security analysis and remediation assistance</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <i class="bi bi-lightbulb text-warning" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Smart Fixes</h6>
+                                <p class="small text-muted">AI suggests secure code alternatives</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <i class="bi bi-chat-dots text-primary" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Explain Vulnerabilities</h6>
+                                <p class="small text-muted">Natural language explanations</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <i class="bi bi-signpost-2 text-success" style="font-size: 2rem;"></i>
+                                <h6 class="mt-2">Guided Remediation</h6>
+                                <p class="small text-muted">Step-by-step security fixes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-3">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle"></i> Quick Stats
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted small mb-1">Total News Items</h6>
+                        <h3 class="text-primary mb-0">@Model.LatestGHASNews.Count</h3>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted small mb-1">Page Views</h6>
+                        <h3 class="text-success mb-0">@Model.PageViews</h3>
+                    </div>
+                    <div>
+                        <h6 class="text-muted small mb-1">Last Updated</h6>
+                        <p class="small mb-0">@DateTime.Now.ToString("MMM dd, yyyy HH:mm")</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-link-45deg"></i> Resources
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="https://docs.github.com/en/code-security" class="text-decoration-none" target="_blank">
+                                <i class="bi bi-book"></i> Documentation
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://github.com/security" class="text-decoration-none" target="_blank">
+                                <i class="bi bi-shield-check"></i> Security Blog
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://github.com/features/security" class="text-decoration-none" target="_blank">
+                                <i class="bi bi-star"></i> Features
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://gh.io/advanced-security" class="text-decoration-none" target="_blank">
+                                <i class="bi bi-briefcase"></i> Enterprise
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.feature-box {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
