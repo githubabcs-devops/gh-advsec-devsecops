@@ -1,0 +1,183 @@
+@page
+@model DevSecOps5Model
+@{
+    ViewData["Title"] = "DevSecOps5 - Latest GHAS Features Demo";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Explore the newest features and capabilities of GitHub Advanced Security (GHAS) 2025</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for demo messages -->
+    @if (TempData["SecurityTest"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> @TempData["SecurityTest"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Latest GHAS News Section -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-gradient bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GitHub Advanced Security News 2025
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.LatestGHASNews.Any())
+                    {
+                        <div class="row">
+                            @foreach (var newsItem in Model.LatestGHASNews)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="card border-success">
+                                        <div class="card-body">
+                                            <span class="badge bg-success mb-2">HOT</span>
+                                            <p class="card-text">@newsItem</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No latest news available.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- GHAS 2025 Features Overview -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h3 class="card-title mb-0">🚀 GHAS 2025 Enhanced Features</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-robot"></i> AI-Powered Code Review</h5>
+                            <p>Enhanced CodeQL with AI suggestions for vulnerability remediation.</p>
+                            
+                            <h5><i class="bi bi-shield-lock"></i> Advanced Secret Scanning</h5>
+                            <p>Real-time secret detection with custom pattern matching and auto-remediation.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-graph-up-arrow"></i> Supply Chain Security</h5>
+                            <p>Enhanced dependency graph with SBOM generation and license compliance.</p>
+                            
+                            <h5><i class="bi bi-cloud-security"></i> Cloud Security Posture</h5>
+                            <p>Infrastructure as Code scanning with cloud configuration analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Testing Sidebar -->
+        <div class="col-lg-4">
+            <!-- Vulnerability Demo Section -->
+            <div class="card mb-4 border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-bug"></i> Security Vulnerability Demo
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        ⚠️ This demo contains intentionally vulnerable code patterns for GHAS detection testing.
+                    </p>
+                    
+                    <!-- SQL Test Form -->
+                    <form method="post" asp-page-handler="TestSql" class="mb-3">
+                        <div class="mb-3">
+                            <label for="sqlInput" class="form-label">SQL Query Test:</label>
+                            <input type="text" class="form-control" id="sqlInput" name="sqlInput" 
+                                   placeholder="Enter test query" value="SELECT * FROM users">
+                            <div class="form-text text-danger">
+                                ⚠️ This may be vulnerable to SQL injection
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play-circle"></i> Test SQL
+                        </button>
+                    </form>
+
+                    <!-- Regex Test Form -->
+                    <form method="post" asp-page-handler="TestRegex" class="mb-3">
+                        <div class="mb-3">
+                            <label for="regexPattern" class="form-label">Regex Pattern Test:</label>
+                            <input type="text" class="form-control" id="regexPattern" name="regexPattern" 
+                                   placeholder="Enter regex pattern" value="(a+)+">
+                            <div class="form-text text-danger">
+                                ⚠️ This may be vulnerable to ReDoS attacks
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play-circle"></i> Test Regex
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">GHAS Resources</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="https://docs.github.com/en/code-security" class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="bi bi-book"></i> GHAS Documentation
+                        </a>
+                        <a href="https://github.com/github/codeql" class="btn btn-outline-secondary btn-sm" target="_blank">
+                            <i class="bi bi-github"></i> CodeQL Queries
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/code-scanning" class="btn btn-outline-success btn-sm" target="_blank">
+                            <i class="bi bi-shield-check"></i> Code Scanning Setup
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Stats Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Demo Statistics</h5>
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h4 class="text-danger">@Model.VulnerabilityCount</h4>
+                            <small>Vulnerabilities Detected</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="text-warning">@Model.SecretsFound</h4>
+                            <small>Secrets Found</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="text-info">@Model.DependenciesScanned</h4>
+                            <small>Dependencies Scanned</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="text-success">@Model.SecurityScore</h4>
+                            <small>Security Score</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Bootstrap Icons if not already included -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
