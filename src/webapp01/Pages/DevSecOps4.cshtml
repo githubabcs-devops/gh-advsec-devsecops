@@ -1,0 +1,242 @@
+@page
+@model DevSecOps4Model
+@{
+    ViewData["Title"] = "DevSecOps 4.0 - Advanced GitHub Security Demo";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Explore the cutting-edge features and latest innovations in GitHub Advanced Security (GHAS)</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for TempData messages -->
+    @if (TempData["SecurityResult"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["SecurityResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["SecurityError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["SecurityError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Main Content Area -->
+        <div class="col-lg-8">
+            <!-- Latest GHAS News Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GitHub Advanced Security News
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.LatestNews != null && Model.LatestNews.Any())
+                    {
+                        <div class="row">
+                            @foreach (var newsItem in Model.LatestNews)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100 border-success">
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <i class="bi bi-check-circle text-success"></i> @newsItem
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No news available at this time.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Enhanced GHAS Features Overview -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-shield-check"></i> Advanced GHAS 4.0 Features
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-cpu"></i> AI-Powered CodeQL</h5>
+                            <p>Enhanced semantic analysis with machine learning for better vulnerability detection.</p>
+                            
+                            <h5><i class="bi bi-robot"></i> Automated Remediation</h5>
+                            <p>AI-suggested fixes for detected security vulnerabilities with one-click application.</p>
+                            
+                            <h5><i class="bi bi-graph-up-arrow"></i> Advanced Analytics</h5>
+                            <p>Deep insights into security trends and patterns across your organization.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-cloud-arrow-up"></i> Cloud Security Integration</h5>
+                            <p>Seamless integration with cloud security services and infrastructure as code scanning.</p>
+                            
+                            <h5><i class="bi bi-people"></i> Team Collaboration</h5>
+                            <p>Enhanced collaboration tools for security teams with real-time notifications.</p>
+                            
+                            <h5><i class="bi bi-speedometer2"></i> Performance Optimized</h5>
+                            <p>Faster scanning with reduced false positives and improved accuracy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-book"></i> GHAS 4.0 Resources
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="https://docs.github.com/en/code-security/getting-started/github-security-features" class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="bi bi-book"></i> GHAS 4.0 Documentation
+                        </a>
+                        <a href="https://github.com/github/codeql" class="btn btn-outline-secondary btn-sm" target="_blank">
+                            <i class="bi bi-github"></i> CodeQL Repository
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/code-scanning" class="btn btn-outline-success btn-sm" target="_blank">
+                            <i class="bi bi-shield-check"></i> Advanced Code Scanning
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/secret-scanning" class="btn btn-outline-warning btn-sm" target="_blank">
+                            <i class="bi bi-key"></i> Secret Scanning Plus
+                        </a>
+                        <a href="https://docs.github.com/en/code-security/dependabot" class="btn btn-outline-danger btn-sm" target="_blank">
+                            <i class="bi bi-layers"></i> Dependabot Advanced
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Demo Tools -->
+        <div class="col-lg-4">
+            <!-- Security Demo Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Security Demo 4.0
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        This page contains intentionally vulnerable code patterns for GHAS 4.0 demonstration.
+                        These vulnerabilities showcase the advanced detection capabilities of GitHub Advanced Security.
+                    </p>
+                    
+                    <!-- Enhanced Security Testing Form -->
+                    <form method="post" asp-page-handler="TestSecurity" class="mt-3">
+                        <div class="mb-3">
+                            <label for="userInput" class="form-label">User Input (Log Injection Test):</label>
+                            <input type="text" class="form-control" id="userInput" name="userInput" 
+                                   placeholder="Enter text to test log injection..." />
+                        </div>
+                        <div class="mb-3">
+                            <label for="regexPattern" class="form-label">Regex Pattern (ReDoS Test):</label>
+                            <input type="text" class="form-control" id="regexPattern" name="regexPattern" 
+                                   placeholder="^(a+)+$" value="^(a+)+$" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="jsonData" class="form-label">JSON Data (Deserialization Test):</label>
+                            <textarea class="form-control" id="jsonData" name="jsonData" rows="3" 
+                                      placeholder='{"test": "data"}'></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play-circle"></i> Run Security Tests
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Database Connection Demo -->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-database"></i> Database Demo
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        Demonstrates database connection vulnerabilities for GHAS detection.
+                    </p>
+                    <form method="post" asp-page-handler="TestDatabase" class="mt-3">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-database-check"></i> Test DB Connection
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Statistics Card -->
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-graph-up"></i> Demo Statistics
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h5 class="text-primary">@Model.VulnerabilityCount</h5>
+                            <small class="text-muted">Vulnerabilities</small>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="text-success">@Model.NewsCount</h5>
+                            <small class="text-muted">News Items</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ready to secure your code?</h5>
+                    <p class="card-text">Start your journey with GitHub Advanced Security 4.0 today.</p>
+                    <a href="https://github.com/features/security" class="btn btn-primary" target="_blank">
+                        <i class="bi bi-shield-shaded"></i> Get Started with GHAS 4.0
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap Icons if not already included -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+@section Scripts {
+    <script>
+        // Simple JavaScript for demo purposes
+        $(document).ready(function() {
+            console.log('DevSecOps 4.0 page loaded');
+            
+            // Demo: Potential XSS vulnerability (for GHAS detection)
+            var userAgent = navigator.userAgent;
+            document.querySelector('.card-footer')?.insertAdjacentHTML('beforeend', 
+                '<small class="text-muted">User Agent: ' + userAgent + '</small>');
+        });
+    </script>
+}
