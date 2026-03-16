@@ -1,5 +1,5 @@
 - Use the gh-advsec-devsecops repository from the workspace
-- Create me a new unique branch name under feature/devsecops-demo-[randon-number] 
+- Create me a new unique branch name under feature/devsecops-demo-[random-number] 
 - Create a new DevSecOps-[random-number].cshtml page and reference it into the Index page. 
 - Add content to it with latest news about GitHub Advanced Security.
 - Implemented the ILogger for the backend code of the page.
