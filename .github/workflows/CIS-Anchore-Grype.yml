@@ -42,7 +42,7 @@ jobs:
           load: true
 
       - name: Run the Anchore Grype scan action
-        uses: anchore/scan-action@v6
+        uses: anchore/scan-action@v7
         id: scan
         with:
           image: "${{ env.imageName }}:${{ env.tag }}"
