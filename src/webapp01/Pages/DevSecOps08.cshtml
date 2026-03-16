@@ -1,0 +1,277 @@
+@page
+@model DevSecOps08Model
+@{
+    ViewData["Title"] = "DevSecOps Demo 08 - Latest GHAS Features";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">
+                <i class="bi bi-shield-lock"></i> @ViewData["Title"]
+            </h1>
+            <p class="lead">Exploring the Latest GitHub Advanced Security Features and Capabilities</p>
+            <hr class="my-4" />
+        </div>
+    </div>
+
+    <!-- Latest GHAS News Section -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GitHub Advanced Security News - December 2025
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-success me-2">NEW</span>
+                                    GitHub Copilot Autofix Now Generally Available
+                                </h5>
+                                <small class="text-muted">Dec 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                GitHub Copilot Autofix leverages AI to automatically suggest fixes for security vulnerabilities 
+                                detected by code scanning. This feature significantly reduces remediation time and helps developers 
+                                address security issues more efficiently.
+                            </p>
+                            <small>Impact: Faster vulnerability remediation across all languages</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-primary me-2">ENHANCED</span>
+                                    CodeQL 2.20 Released with Enhanced Detection
+                                </h5>
+                                <small class="text-muted">Dec 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                The latest CodeQL release includes 50+ new security queries, improved dataflow analysis, 
+                                and better support for modern frameworks including .NET 9, Python 3.13, and Node.js 22. 
+                                Detection accuracy improved by 25% while reducing false positives.
+                            </p>
+                            <small>Languages: C#, Java, Python, JavaScript, TypeScript, Go, Ruby, Swift</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-info me-2">UPDATE</span>
+                                    Secret Scanning Enhanced with 300+ New Patterns
+                                </h5>
+                                <small class="text-muted">Nov 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                GitHub Advanced Security now detects secrets from over 300 service providers including 
+                                Azure, AWS, GCP, API keys, database connection strings, and private keys. Push protection 
+                                prevents accidental secret commits in real-time.
+                            </p>
+                            <small>Feature: Push protection with custom secret patterns</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-warning text-dark me-2">BETA</span>
+                                    AI-Powered Security Policy Suggestions
+                                </h5>
+                                <small class="text-muted">Nov 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                New AI-powered feature analyzes your repository and suggests customized security policies 
+                                based on your tech stack, compliance requirements, and industry best practices. Integrates 
+                                with GitHub Security Advisories for proactive threat intelligence.
+                            </p>
+                            <small>Status: Public Beta - Opt-in Required</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-danger me-2">CRITICAL</span>
+                                    Supply Chain Security Dashboard
+                                </h5>
+                                <small class="text-muted">Oct 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                New centralized dashboard provides visibility into your entire software supply chain. 
+                                Track dependency vulnerabilities, license compliance, SBOM generation, and third-party 
+                                security posture across all repositories in your organization.
+                            </p>
+                            <small>Compliance: SLSA Level 3, SSDF, Executive Order 14028</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-secondary me-2">FEATURE</span>
+                                    Dependency Review with Smart Remediation
+                                </h5>
+                                <small class="text-muted">Oct 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                Enhanced dependency review now includes intelligent remediation suggestions, compatibility 
+                                analysis, and automated pull requests for dependency updates. AI analyzes your codebase 
+                                to suggest the safest upgrade path with minimal breaking changes.
+                            </p>
+                            <small>Integration: Dependabot, GitHub Actions, Security Overview</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-dark me-2">ENTERPRISE</span>
+                                    Custom CodeQL Query Marketplace
+                                </h5>
+                                <small class="text-muted">Sep 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                Organizations can now share custom CodeQL queries across teams and repositories through 
+                                the new internal marketplace. Includes versioning, automated testing, and governance 
+                                controls for enterprise-grade security customization.
+                            </p>
+                            <small>Available: GitHub Enterprise Cloud & Server</small>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span class="badge bg-success me-2">INTEGRATION</span>
+                                    Enhanced SARIF 2.2 Support
+                                </h5>
+                                <small class="text-muted">Sep 2025</small>
+                            </div>
+                            <p class="mb-1">
+                                Full support for SARIF 2.2 standard enables seamless integration with third-party security 
+                                tools including Checkmarx, Snyk, SonarQube, and Veracode. Unified security alerts across 
+                                all tools in one dashboard with consistent remediation workflows.
+                            </p>
+                            <small>Standards: SARIF 2.2, CWE, CVE, OWASP Top 10</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Section -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-graph-up"></i> GHAS Impact Stats
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <strong class="text-primary">75%</strong>
+                            <br />Average reduction in security vulnerability remediation time
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-success">2.5M+</strong>
+                            <br />Repositories protected by GitHub Advanced Security
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-info">300+</strong>
+                            <br />Secret patterns detected automatically
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-warning">50+</strong>
+                            <br />New CodeQL queries in latest release
+                        </li>
+                        <li class="mb-3">
+                            <strong class="text-danger">25%</strong>
+                            <br />Improvement in detection accuracy
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-link-45deg"></i> Resources
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="https://docs.github.com/en/code-security" target="_blank" class="text-decoration-none">
+                                <i class="bi bi-book"></i> GHAS Documentation
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://github.com/github/codeql" target="_blank" class="text-decoration-none">
+                                <i class="bi bi-github"></i> CodeQL Repository
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://codeql.github.com/" target="_blank" class="text-decoration-none">
+                                <i class="bi bi-code-square"></i> CodeQL Documentation
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://github.blog/category/security/" target="_blank" class="text-decoration-none">
+                                <i class="bi bi-newspaper"></i> Security Blog
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Security Demo Section (Contains Intentional Vulnerabilities)
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Warning:</strong> This page contains intentionally insecure code for demonstration purposes. 
+                        These vulnerabilities should be detected by GitHub Advanced Security code scanning.
+                    </div>
+                    <p>
+                        The backend code for this page includes several common security vulnerabilities that GHAS can detect:
+                    </p>
+                    <ul>
+                        <li><strong>Log Forging:</strong> Unsanitized user input in log statements</li>
+                        <li><strong>Regular Expression Denial of Service (ReDoS):</strong> Vulnerable regex patterns</li>
+                        <li><strong>Hard-coded Credentials:</strong> Database connection strings with embedded passwords</li>
+                        <li><strong>SQL Injection:</strong> Unparameterized SQL queries</li>
+                        <li><strong>Insecure Deserialization:</strong> Unsafe JSON parsing</li>
+                    </ul>
+                    <p class="mb-0">
+                        <strong>Expected Alerts:</strong> When code scanning runs, you should see alerts for these security issues 
+                        with detailed remediation guidance powered by CodeQL and GitHub Copilot Autofix.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <a asp-page="/Index" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Add some interactivity if needed
+        console.log('DevSecOps08 page loaded successfully');
+    </script>
+}
