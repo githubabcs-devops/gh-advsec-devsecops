@@ -1,0 +1,189 @@
+@page
+@model DevSecOps3Model
+@{
+    ViewData["Title"] = "DevSecOps with GitHub Advanced Security v3";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Explore the latest features and capabilities of GitHub Advanced Security (GHAS) v3</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for TempData messages -->
+    @if (TempData["RegexResult"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["RegexResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["RegexError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["RegexError"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["LogResult"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["LogResult"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Latest GHAS News Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Latest GitHub Advanced Security News</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">What's New in GHAS 2024-2025</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Enhanced CodeQL Analysis:</strong> Improved detection for supply chain vulnerabilities and zero-day exploits
+                        </li>
+                        <li class="list-group-item">
+                            <strong>AI-Powered Security Insights:</strong> GitHub Copilot integration for automated security recommendations
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Advanced Secret Scanning:</strong> Real-time detection with enterprise-grade pattern matching
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Dependency Review v3:</strong> Enhanced vulnerability assessment with risk scoring and remediation guidance
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Security Advisory Database:</strong> Comprehensive threat intelligence with automated patch suggestions
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Sections -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Security Demo: Regex Exposure</h4>
+                </div>
+                <div class="card-body">
+                    <p>This demo shows potential ReDoS (Regular Expression Denial of Service) vulnerabilities:</p>
+                    <form method="post" asp-page-handler="TestRegex">
+                        <div class="mb-3">
+                            <label for="userInput" class="form-label">Test Input:</label>
+                            <input type="text" class="form-control" id="userInput" name="userInput" 
+                                   value="aaaaaaaaaaaaaaaaaaaaaaaaaaaa!" placeholder="Enter text to test against regex">
+                        </div>
+                        <button type="submit" class="btn btn-warning">Test Regex Pattern</button>
+                    </form>
+                    <small class="text-muted">Note: This uses a potentially vulnerable regex pattern for demonstration purposes</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Security Demo: Log Forging</h4>
+                </div>
+                <div class="card-body">
+                    <p>This demo shows log injection vulnerabilities:</p>
+                    <form method="post" asp-page-handler="TestLogging">
+                        <div class="mb-3">
+                            <label for="logMessage" class="form-label">Log Message:</label>
+                            <input type="text" class="form-control" id="logMessage" name="logMessage" 
+                                   value="Normal user action" placeholder="Enter log message">
+                        </div>
+                        <button type="submit" class="btn btn-danger">Write to Log</button>
+                    </form>
+                    <small class="text-muted">Note: This demonstrates insecure logging practices</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Features Overview -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">GHAS v3 Core Features</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Code Scanning</h5>
+                            <ul>
+                                <li>CodeQL semantic analysis</li>
+                                <li>Third-party tool integration</li>
+                                <li>Custom query development</li>
+                                <li>Real-time PR scanning</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Secret Scanning</h5>
+                            <ul>
+                                <li>Provider-specific patterns</li>
+                                <li>Custom secret patterns</li>
+                                <li>Push protection</li>
+                                <li>Historical scan capabilities</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Dependency Management</h5>
+                            <ul>
+                                <li>Dependabot security updates</li>
+                                <li>License compliance</li>
+                                <li>Vulnerability database</li>
+                                <li>Supply chain security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resources Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">GHAS v3 Resources</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Documentation</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="https://docs.github.com/en/code-security" target="_blank">GitHub Code Security Documentation</a></li>
+                                <li><a href="https://docs.github.com/en/code-security/code-scanning" target="_blank">Code Scanning v3 Documentation</a></li>
+                                <li><a href="https://docs.github.com/en/code-security/secret-scanning" target="_blank">Secret Scanning v3 Documentation</a></li>
+                                <li><a href="https://docs.github.com/en/code-security/dependabot" target="_blank">Dependabot v3 Documentation</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Training & Certification</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="https://skills.github.com/" target="_blank">GitHub Skills Training</a></li>
+                                <li><a href="https://github.com/security-lab" target="_blank">GitHub Security Lab</a></li>
+                                <li><a href="https://codeql.github.com/" target="_blank">CodeQL Learning Resources</a></li>
+                                <li><a href="https://github.blog/category/security/" target="_blank">Security Blog Updates</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
