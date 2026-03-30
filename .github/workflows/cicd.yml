@@ -53,10 +53,10 @@ jobs:
       webapp_url: ${{ steps.deploy.outputs.webapp_url }}
       resource_group: ${{ steps.deploy.outputs.resource_group }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Azure Login
-        uses: azure/login@v2
+        uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3.0.0
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -158,11 +158,11 @@ jobs:
       AZURE_WEBAPP_NAME: ${{ needs.deploy-infrastructure.outputs.webapp_name }}
     steps:
       # Checkout the repo
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       # Setup .NET Core SDK
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5.2.0
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -174,7 +174,7 @@ jobs:
           dotnet publish -c Release --property:PublishDir='bin/publish' ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}${{ env.SRC_PROJECT_PATH }}
 
       - name: Azure Login
-        uses: azure/login@v2
+        uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3.0.0
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -183,7 +183,7 @@ jobs:
       # Deploy to Azure Web apps
       - name: "Run Azure webapp deploy action using publish profile credentials"
         if: false # This disables the action
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@8db8b8d14f21b245e6706fd0607244e354884697 # v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/webapp01/bin/publish"
@@ -199,7 +199,7 @@ jobs:
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/webapp01:latest
 
       - name: Azure Web Apps Deploy
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@8db8b8d14f21b245e6706fd0607244e354884697 # v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           images: "${{ env.AZURE_ACR_NAME }}.azurecr.io/webapp01:${{ github.sha }}"
