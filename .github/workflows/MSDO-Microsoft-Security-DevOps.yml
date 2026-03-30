@@ -28,10 +28,10 @@ jobs:
     # Windows and Linux agents are supported
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
     - name: Run Microsoft Security DevOps
-      uses: microsoft/security-devops-action@v1.12.0
+      uses: microsoft/security-devops-action@08976cb623803b1b36d7112d4ff9f59eae704de0 # v1.12.0
       id: msdo
       with:
       # config: string. Optional. A file path to an MSDO configuration file ('*.gdnconfig').
@@ -42,13 +42,13 @@ jobs:
    
     # Upload alerts to the Security tab - required for MSDO results to appear in the codeQL security alerts tab on GitHub (Requires GHAS)
     - name: Upload results to Security tab
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@d4b3ca9fa7f69d38bfcd667bdc45bc373d16277e # v4
       with:
         sarif_file: ${{ steps.msdo.outputs.sarifFile }}
 
     # Upload alerts file as a workflow artifact - required for MSDO results to appear in the codeQL security alerts tab on GitHub (Requires GHAS)
     - name: Upload alerts file as a workflow artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:  
         name: alerts
         path: ${{ steps.msdo.outputs.sarifFile }}

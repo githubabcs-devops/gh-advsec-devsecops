@@ -30,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Build an image from Dockerfile
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
         with:
           context: ./src/webapp01
           file: ./src/webapp01/Dockerfile
@@ -42,7 +42,7 @@ jobs:
           load: true
 
       - name: Run the Anchore Grype scan action
-        uses: anchore/scan-action@v6
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
         id: scan
         with:
           image: "${{ env.imageName }}:${{ env.tag }}"
@@ -50,12 +50,12 @@ jobs:
           severity-cutoff: critical
       
       - name: Upload Anchore vulnerability report to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@d4b3ca9fa7f69d38bfcd667bdc45bc373d16277e # v4
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
       
       - name: Upload alerts file as a workflow artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:  
           name: alerts
           path: ${{ steps.scan.outputs.sarif }}

@@ -24,14 +24,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Mkdir results-dir
         # make sure results dir is created
         run: mkdir -p results-dir
 
       - name: Run kics Scan
-        uses: checkmarx/kics-github-action@v2.1.13
+        uses: checkmarx/kics-github-action@05aa5eb70eede1355220f4ca5238d96b397e30a6 # v2.1.20
         with:
             path: 'terraform'
             # when provided with a directory on output_path
@@ -51,6 +51,6 @@ jobs:
           cat results-dir/results.json
 
       - name: Upload SARIF file to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@d4b3ca9fa7f69d38bfcd667bdc45bc373d16277e # v4
         with:
           sarif_file: results-dir/results.sarif

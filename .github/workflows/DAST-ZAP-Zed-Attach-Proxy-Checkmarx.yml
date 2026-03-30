@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
   
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       # build and start your application here
       # conditionally run the build step
       # assuming the application is a Docker container
@@ -47,14 +47,14 @@ jobs:
             echo "Application is already running."
           fi
       - name: Run ZAP Scan
-        uses: zaproxy/action-full-scan@v0.12.0
+        uses: zaproxy/action-full-scan@3c58388149901b9a03b7718852c5ba889646c27c # v0.13.0
         id: zap
         with:
           allow_issue_writing: false
           target: "${{ env.ZAP_TARGET }}"
           artifact_name: "zap-full-scan"
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.14.0
+        uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
         with:
           allow_issue_writing: false
           target: "${{ env.ZAP_TARGET }}"          
@@ -64,6 +64,6 @@ jobs:
       - uses: githubabcs-devops/zap-to-ghas@main
       
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@d4b3ca9fa7f69d38bfcd667bdc45bc373d16277e # v4
         with:
           sarif_file: results.sarif

@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Run kubesec scanner (critical-double.yaml)
-        uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14
+        uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14 # v0.0.2
         with:
           input: manifests/critical-double.yaml # specify configuration file to scan here
           format: template
@@ -52,7 +52,7 @@ jobs:
 
       - name: Upload Kubesec scan results to GitHub Security tab
         if: steps.validate.outputs.valid == 'true'
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@d4b3ca9fa7f69d38bfcd667bdc45bc373d16277e # v4
         with:
           sarif_file: kubesec-results.sarif
       
@@ -61,10 +61,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Run kubesec scanner (score-5-pod-serviceaccount.yaml)
-        uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14
+        uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14 # v0.0.2
         with:
           input: manifests/score-5-pod-serviceaccount.yaml # specify configuration file to scan here
           format: template
@@ -90,6 +90,6 @@ jobs:
 
       - name: Upload Kubesec scan results to GitHub Security tab
         if: steps.validate.outputs.valid == 'true'
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@d4b3ca9fa7f69d38bfcd667bdc45bc373d16277e # v4
         with:
           sarif_file: kubesec-results.sarif
