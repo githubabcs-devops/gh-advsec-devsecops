@@ -70,3 +70,7 @@ Boost visibility between security and development teams by integrating GHAS with
 > **⚡ DevSecOps is essential for modern software delivery.**
 
 > **🛡️ GitHub Advanced Security (GHAS) embeds security natively into developer workflows.**
+
+## 📖 Documentation
+
+For a concise overview of the shift-left security concepts, workflows, AI agents, and infrastructure patterns demonstrated in this repo, see the [DevSecOps Concepts Guide](docs/devsecops-concepts.md).
