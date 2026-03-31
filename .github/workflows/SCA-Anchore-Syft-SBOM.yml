@@ -32,7 +32,7 @@ jobs:
         run: docker build ./src/webapp01 --file ./src/webapp01/Dockerfile --tag ${{ env.imageName }}:${{ env.tag }}
 
       - name: Scan the image and upload dependency results
-        uses: anchore/sbom-action@da167eac915b4e86f08b264dbdbc867b61be6f0c # v0.20.5
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
         continue-on-error: true
         with:
           image: "${{ env.imageName }}:${{ env.tag }}"
