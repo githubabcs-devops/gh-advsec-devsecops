@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI for DevSecOps | GHAS + GHCP + MDC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --gh-blue: #0969da;
+  --gh-dark: #0d1117;
+  --gh-gray-dark: #1c2128;
+  --gh-gray: #30363d;
+  --gh-gray-light: #484f58;
+  --gh-border: #30363d;
+  --gh-text: #e6edf3;
+  --gh-text-muted: #8b949e;
+  --gh-green: #3fb950;
+  --gh-purple: #a371f7;
+  --gh-orange: #d29922;
+  --gh-red: #f85149;
+  --gh-cyan: #58a6ff;
+  --accent-gradient: linear-gradient(135deg, #58a6ff, #a371f7);
+  --card-bg: #161b22;
+  --card-border: #21262d;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background-color: var(--gh-dark);
+  color: var(--gh-text);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a1e2e 70%, #0d1117 100%);
+  border-bottom: 1px solid var(--card-border);
+  padding: 80px 20px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(88,166,255,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 50%, rgba(163,113,247,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(88,166,255,0.1);
+  border: 1px solid rgba(88,166,255,0.25);
+  color: var(--gh-cyan);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  position: relative;
+}
+.hero .subtitle {
+  font-size: 1.15rem;
+  color: var(--gh-text-muted);
+  max-width: 750px;
+  margin: 0 auto 32px;
+  position: relative;
+}
+.hero-meta {
+  font-size: 0.85rem;
+  color: var(--gh-text-muted);
+  position: relative;
+}
+.hero-meta span { margin: 0 12px; }
+
+/* ── Navigation ─────────────────────────────────────── */
+.toc {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.toc-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+}
+.toc a {
+  display: inline-block;
+  padding: 14px 18px;
+  color: var(--gh-text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.toc a:hover {
+  color: var(--gh-text);
+  border-bottom-color: var(--gh-cyan);
+  background: rgba(88,166,255,0.05);
+}
+
+/* ── Layout ─────────────────────────────────────────── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+section:last-of-type { border-bottom: none; }
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--gh-text);
+}
+h2 .section-num {
+  color: var(--gh-cyan);
+  font-weight: 800;
+  margin-right: 8px;
+}
+.section-lead {
+  font-size: 1.05rem;
+  color: var(--gh-text-muted);
+  margin-bottom: 40px;
+  max-width: 800px;
+}
+
+h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 40px 0 16px;
+  color: var(--gh-text);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 24px 0 12px;
+  color: var(--gh-text);
+}
+
+p { margin-bottom: 16px; }
+strong { color: #f0f6fc; }
+a { color: var(--gh-cyan); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Blockquote ─────────────────────────────────────── */
+blockquote {
+  background: rgba(88,166,255,0.05);
+  border-left: 4px solid var(--gh-cyan);
+  padding: 20px 24px;
+  margin: 24px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--gh-text-muted);
+}
+blockquote strong { color: var(--gh-text); font-style: normal; }
+
+/* ── Cards ──────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover {
+  border-color: var(--gh-cyan);
+  transform: translateY(-2px);
+}
+.card-icon { font-size: 1.6rem; margin-bottom: 12px; display: block; }
+.card h4 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; color: var(--gh-text); border: none; }
+.card p { font-size: 0.9rem; color: var(--gh-text-muted); margin-bottom: 0; }
+
+/* ── Tables ─────────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 24px 0;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+thead { background: rgba(88,166,255,0.08); }
+th {
+  text-align: left;
+  padding: 14px 16px;
+  font-weight: 600;
+  color: var(--gh-text);
+  border-bottom: 1px solid var(--card-border);
+  white-space: nowrap;
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--gh-text-muted);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(88,166,255,0.03); }
+td strong { color: var(--gh-text); }
+
+/* ── Stats Row ──────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-card .stat-label {
+  font-size: 0.8rem;
+  color: var(--gh-text-muted);
+  margin-top: 4px;
+}
+
+/* ── Lists ──────────────────────────────────────────── */
+ul, ol { margin: 16px 0 16px 24px; }
+li { margin-bottom: 8px; color: var(--gh-text-muted); }
+li strong { color: var(--gh-text); }
+
+/* ── Mermaid ────────────────────────────────────────── */
+.mermaid-wrapper {
+  margin: 32px 0;
+  padding: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Code / Pre ─────────────────────────────────────── */
+pre {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--gh-text-muted);
+  line-height: 1.6;
+}
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: rgba(88,166,255,0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--gh-cyan);
+}
+pre code { background: none; padding: 0; color: inherit; }
+
+/* ── Phases ─────────────────────────────────────────── */
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.phase-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.phase-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.phase-card.p1::before { background: var(--gh-cyan); }
+.phase-card.p2::before { background: var(--gh-green); }
+.phase-card.p3::before { background: var(--gh-purple); }
+.phase-card.p4::before { background: var(--gh-orange); }
+.phase-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.p1 .phase-num { color: var(--gh-cyan); }
+.p2 .phase-num { color: var(--gh-green); }
+.p3 .phase-num { color: var(--gh-purple); }
+.p4 .phase-num { color: var(--gh-orange); }
+.phase-card h4 { font-size: 1.05rem; margin-bottom: 12px; border: none; }
+.phase-card ul { margin-left: 16px; }
+.phase-card li { font-size: 0.88rem; margin-bottom: 6px; }
+
+/* ── CTA ────────────────────────────────────────────── */
+.cta-box {
+  background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(163,113,247,0.1));
+  border: 1px solid rgba(88,166,255,0.25);
+  border-radius: 16px;
+  padding: 40px;
+  margin: 40px 0;
+  text-align: center;
+}
+.cta-box h3 {
+  border-bottom: none;
+  color: var(--gh-text);
+  font-size: 1.5rem;
+  margin: 0 0 16px;
+}
+.cta-box p {
+  color: var(--gh-text-muted);
+  font-size: 1.05rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ── Workflow steps ──────────────────────────────────── */
+.workflow {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px 24px 24px 48px;
+  margin: 24px 0;
+  position: relative;
+}
+.workflow-step {
+  position: relative;
+  padding: 8px 0 8px 0;
+  color: var(--gh-text-muted);
+  font-size: 0.95rem;
+}
+.workflow-step strong { color: var(--gh-text); }
+.workflow-step .arrow { color: var(--gh-cyan); font-weight: 600; display: block; padding: 4px 0; font-size: 0.8rem; }
+
+/* ── Footer ─────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--gh-text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--card-border);
+}
+.footer a { color: var(--gh-cyan); }
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero { padding: 48px 16px 40px; }
+  .hero h1 { font-size: 1.8rem; }
+  section { padding: 40px 0; }
+  h2 { font-size: 1.5rem; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media print {
+  .toc { display: none; }
+  section { break-inside: avoid; }
+  .mermaid-wrapper { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- HERO                                                   -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">Developer Productivity — GitHub Technical Insiders</div>
+  <h1>Agentic AI for DevSecOps</h1>
+  <p class="subtitle">Transforming Security with GitHub Advanced Security + GitHub Copilot + Microsoft Defender for Cloud</p>
+  <p class="hero-meta">
+    <span>📅 April 2, 2026</span>
+    <span>👤 Calin Lupas &amp; Emmanuel Knafo</span>
+    <span>🏢 Microsoft Canada</span>
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- NAVIGATION                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#sec1">Why DevSecOps</a>
+    <a href="#sec2">GHAS Deep Dive</a>
+    <a href="#sec3">GHAS + MDC</a>
+    <a href="#sec4">Agentic AI</a>
+    <a href="#sec5">Blueprint</a>
+    <a href="#sec6">Takeaways</a>
+    <a href="#sec7">References</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 1 — WHY DEVSECOPS MATTERS                      -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec1">
+  <h2><span class="section-num">01</span> Why DevSecOps Matters Now</h2>
+  <p class="section-lead">The software supply chain is the primary attack vector. Security must be embedded into every phase of development.</p>
+
+  <h3>The Threat Landscape</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🔥</span>
+      <h4>SolarWinds</h4>
+      <p>Vulnerable supply chain &amp; build machine — <strong>18,000 customers</strong> impacted</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔑</span>
+      <h4>Codecov</h4>
+      <p>Leaked developer secrets — Up to <strong>29,000 customers</strong> at risk</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🪵</span>
+      <h4>Log4j</h4>
+      <p>Vulnerable source code — <strong>40% of business networks</strong> globally. 100 attacks/minute at peak.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">#1</div>
+      <div class="stat-label">Applications are the top attack vector<br><small>Verizon DBIR 2024</small></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">65%</div>
+      <div class="stat-label">of vulnerabilities still exist after 3 months<br><small>Veracode SOSS 2024</small></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">5%</div>
+      <div class="stat-label">of companies avoided web app attacks in production<br><small>Contrast Security 2024</small></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">70.8%</div>
+      <div class="stat-label">of organizations have security debt<br><small>Veracode SOSS 2024</small></div>
+    </div>
+  </div>
+
+  <h4>Industry Standards Alignment</h4>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Framework</th><th>Scope</th><th>Relevance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>NIST SSDF</strong></td><td>Secure Software Development Framework</td><td>U.S. federal and private sector baseline</td></tr>
+        <tr><td><strong>SLSA</strong></td><td>Supply-chain Levels for Software Artifacts</td><td>Build integrity and provenance verification</td></tr>
+        <tr><td><strong>Cyber Resilience Act (CRA)</strong></td><td>EU legislation on software security</td><td>Mandatory for EU market software products</td></tr>
+        <tr><td><strong>OpenSSF Scorecard</strong></td><td>Open-source security posture scoring</td><td>Automated dependency risk evaluation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The Economics of Shifting Left</h3>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">$80</div>
+      <div class="stat-label">Development</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">$240</div>
+      <div class="stat-label">Build (3×)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">$960</div>
+      <div class="stat-label">Test / QA (12×)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">$7,600</div>
+      <div class="stat-label">Production (95×)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">$4.88M</div>
+      <div class="stat-label">Breach (avg)<br><small>IBM 2024</small></div>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cost multiplier</strong></td><td>100× more expensive to fix in production vs. development</td><td>NIST &amp; IBM Systems Sciences Institute</td></tr>
+        <tr><td><strong>Exploitation growth</strong></td><td>180% growth in vulnerability exploitation as initial breach access</td><td>Verizon DBIR 2024</td></tr>
+        <tr><td><strong>Release pressure</strong></td><td>79% say DevOps teams face increasing pressure to shorten cycles</td><td>Contrast Security 2024</td></tr>
+        <tr><td><strong>Security debt</strong></td><td>70.8% of organizations have security debt; 89.4% in first-party code</td><td>Veracode SOSS 2024</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>From DevOps → Agentic DevSecOps</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+graph LR
+    A["DevOps\nPeople + Process + Tech\n→ Continuous value delivery"] -->
+    B["DevSecOps\nSecurity as shared responsibility\n→ Secure continuous delivery"] -->
+    C["Agentic DevOps\nAI agents as team members\n→ Automate & accelerate"] -->
+    D["Agentic DevSecOps\nAI agents with security built in\n→ Secure AI-accelerated delivery"]
+
+    style A fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px,color:#e6edf3
+    style B fill:#1e1b4b,stroke:#4f46e5,stroke-width:2px,color:#e6edf3
+    style C fill:#3b0764,stroke:#7c3aed,stroke-width:2px,color:#e6edf3
+    style D fill:#064e3b,stroke:#059669,stroke-width:3px,color:#e6edf3
+    </pre>
+  </div>
+
+  <h4>Three Barriers — Solved by Agentic DevSecOps</h4>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🏢</span>
+      <h4>Organization & Team Gaps</h4>
+      <p>Security teams isolated from engineering → <strong>Agents embed security in developer workflow</strong></p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📚</span>
+      <h4>Skill & Knowledge Gaps</h4>
+      <p>Developers lack security expertise → <strong>Agents provide just-in-time education</strong></p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔧</span>
+      <h4>Tooling Friction</h4>
+      <p>Security tools not built for devs → <strong>Agents detect, explain, fix in real-time</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 2 — GHAS DEEP DIVE                             -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec2">
+  <h2><span class="section-num">02</span> GitHub Advanced Security — Deep Dive</h2>
+  <p class="section-lead">GitHub is the world's largest developer platform with <strong>~150 million developers</strong>. GHAS brings native, first-party security directly into this platform — not bolted on, but built in. The mission: shift the burden from your team to your tools.</p>
+
+  <h3>Product Structure (Post April 2025)</h3>
+  <p>Announced <strong>March 4, 2025</strong>, GA <strong>April 1, 2025</strong> — GHAS restructured into two standalone products, now available on GitHub Team plans:</p>
+
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Product</th><th>What's Included</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td><strong>GitHub Secret Protection</strong></td><td>Secret scanning, push protection, AI-powered generic detection, custom patterns, delegated bypass, validity checks</td><td>$19/mo per active committer</td></tr>
+        <tr><td><strong>GitHub Code Security</strong></td><td>CodeQL code scanning, Copilot Autofix, Dependabot, security campaigns, third-party SARIF</td><td>$30/mo per active committer</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <blockquote><strong>GHES Note:</strong> On GitHub Enterprise Server, GHAS continues as a bundled add-on to the Enterprise license and was not restructured into the standalone Secret Protection / Code Security products.</blockquote>
+
+  <h3>🔒 Prevent: Secret Protection &amp; Push Protection</h3>
+  <blockquote><strong>💡 Stolen or leaked credentials remain the #1 initial attack vector</strong> in data breaches, responsible for the largest share of incidents year over year. — <em>IBM Cost of a Data Breach 2021 &amp; 2023</em></blockquote>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+flowchart TD
+    A["Developer pushes code"] --> B{"Push Protection\nScanner"}
+    B -->|No secret found| C["✅ Push succeeds"]
+    B -->|Secret detected| D["🚫 Push BLOCKED"]
+    D --> E["Developer sees:\nSecret type, File, Line, Options"]
+    E --> F["Remove the secret"]
+    E --> G["Mark as false positive"]
+    E --> H["Request delegated bypass"]
+    H --> I["Security reviewer notified"]
+    I --> J{"Reviewer decision"}
+    J -->|Approve| K["Push allowed + Audit trail"]
+    J -->|Deny| L["Push remains blocked"]
+
+    style A fill:#1e1b4b,stroke:#4f46e5,color:#e6edf3
+    style B fill:#3b0764,stroke:#7c3aed,color:#e6edf3
+    style C fill:#064e3b,stroke:#059669,color:#e6edf3
+    style D fill:#881337,stroke:#e11d48,color:#e6edf3
+    style E fill:#78350f,stroke:#d97706,color:#e6edf3
+    style F fill:#064e3b,stroke:#059669,color:#e6edf3
+    style G fill:#1e293b,stroke:#64748b,color:#e6edf3
+    style H fill:#3b0764,stroke:#7c3aed,color:#e6edf3
+    style K fill:#064e3b,stroke:#059669,color:#e6edf3
+    style L fill:#881337,stroke:#e11d48,color:#e6edf3
+    </pre>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Capability</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Partner Patterns</strong></td><td>200+ partner patterns covering 400+ token types from cloud providers, SaaS platforms, and package registries</td></tr>
+        <tr><td><strong>Copilot Secret Scanning</strong></td><td>AI/ML-powered detection of unstructured secrets — passwords, connection strings, generic credentials</td></tr>
+        <tr><td><strong>Custom Patterns</strong></td><td>Organization-defined regex for internal secret formats</td></tr>
+        <tr><td><strong>Validity Checks</strong></td><td>Automated verification with partner APIs to confirm if a detected secret is still active</td></tr>
+        <tr><td><strong>Push Protection</strong></td><td>Server-side real-time blocking <em>before</em> secrets reach the repository</td></tr>
+        <tr><td><strong>Delegated Bypass</strong></td><td>Governance workflow requiring security team approval for exceptions</td></tr>
+        <tr><td><strong>Free Secret Risk Assessment</strong></td><td>Point-in-time scan of all repos (incl. private/internal/archived) — no license required</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>🔍 Detect: Code Scanning with CodeQL</h3>
+  <p>CodeQL is GitHub's <strong>semantic code analysis engine</strong> — treats code as data by building a relational database and running security queries.</p>
+
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Language</th><th>Build Mode</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>C/C++</strong></td><td><code>autobuild</code> or manual</td><td>Requires compilation</td></tr>
+        <tr><td><strong>C#</strong></td><td><code>autobuild</code> or manual</td><td>.NET framework support</td></tr>
+        <tr><td><strong>Go</strong></td><td><code>autobuild</code></td><td>Automatic</td></tr>
+        <tr><td><strong>Java/Kotlin</strong></td><td><code>autobuild</code> or manual</td><td>Maven/Gradle support</td></tr>
+        <tr><td><strong>JavaScript/TypeScript</strong></td><td>No build required</td><td>—</td></tr>
+        <tr><td><strong>Python</strong></td><td>No build required</td><td>—</td></tr>
+        <tr><td><strong>Ruby</strong></td><td>No build required</td><td>—</td></tr>
+        <tr><td><strong>Swift</strong></td><td><code>autobuild</code> or manual</td><td>macOS runners required</td></tr>
+        <tr><td><strong>Rust</strong></td><td><code>autobuild</code></td><td>Rust editions 2021 and 2024</td></tr>
+        <tr><td><strong>GitHub Actions</strong></td><td>No build required</td><td>Scans workflow YAML for injection and security issues</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>🔧 Fix: Copilot Autofix — AI-Powered Remediation</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+flowchart LR
+    A["CodeQL\nAlert"] --> B["Autofix Engine\nLLM + CodeQL Context"]
+    B --> C["Analyze:\nCWE, data flow"]
+    C --> D["Generate:\nCode fix + explanation"]
+    D --> E["Validate:\nFix doesn't break"]
+    E --> F["PR Comment:\nExplanation + Diff\n+ One-click apply"]
+
+    style A fill:#881337,stroke:#e11d48,color:#e6edf3
+    style B fill:#3b0764,stroke:#7c3aed,color:#e6edf3
+    style C fill:#1e293b,stroke:#64748b,color:#e6edf3
+    style D fill:#1e293b,stroke:#64748b,color:#e6edf3
+    style E fill:#1e293b,stroke:#64748b,color:#e6edf3
+    style F fill:#064e3b,stroke:#059669,stroke-width:2px,color:#e6edf3
+    </pre>
+  </div>
+
+  <h4>Speed Impact (Source: GitHub — "Found means fixed")</h4>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">3×</div>
+      <div class="stat-label">All alerts (avg)<br>28 min vs 1.5 hr</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">7×</div>
+      <div class="stat-label">Cross-site Scripting<br>22 min vs 2.8 hr</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">12×</div>
+      <div class="stat-label">SQL Injection<br>18 min vs 3.7 hr</div>
+    </div>
+  </div>
+
+  <ul>
+    <li>Covers <strong>90%+ of alert types</strong> across all major CodeQL-supported languages</li>
+    <li>Remediates <strong>two-thirds of vulnerabilities</strong> with little or no editing</li>
+    <li>Generates fix suggestions for <strong>third-party SARIF findings</strong> — not just CodeQL</li>
+    <li>Available for both <strong>new PR alerts</strong> and <strong>existing security debt</strong> (via Security Campaigns)</li>
+  </ul>
+
+  <h3>📈 Scale: Security Campaigns &amp; Debt Reduction</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+flowchart TD
+    A["Security Manager identifies\nsystemic vulnerability"] --> B["Create Campaign:\nTarget CWEs across repos"]
+    B --> C["GitHub generates Issues\nwith Autofix suggestions\n(up to 1,000 alerts)"]
+    C --> D["Developers receive:\nVulnerability details + Autofix\n+ Runtime context from MDC"]
+    D --> E["Campaign Dashboard:\nFixed / Open / In-Progress\nPer-team metrics + SLA"]
+    E --> F["Bidirectional sync:\nGitHub ↔ Defender for Cloud"]
+
+    style A fill:#881337,stroke:#e11d48,color:#e6edf3
+    style B fill:#1e1b4b,stroke:#4f46e5,color:#e6edf3
+    style C fill:#3b0764,stroke:#7c3aed,color:#e6edf3
+    style D fill:#064e3b,stroke:#059669,color:#e6edf3
+    style E fill:#1e3a5f,stroke:#3b82f6,color:#e6edf3
+    style F fill:#064e3b,stroke:#059669,stroke-width:2px,color:#e6edf3
+    </pre>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">70.8%</div>
+      <div class="stat-label">Organizations with security debt</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">89.4%</div>
+      <div class="stat-label">Security debt in first-party code</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">46.6%</div>
+      <div class="stat-label">Flaws that become security debt</div>
+    </div>
+  </div>
+
+  <h3>📦 Protect: Supply Chain Security</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Feature</th><th>Function</th><th>Automation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Dependency Graph</strong></td><td>Maps all direct + transitive dependencies</td><td>Automatic</td></tr>
+        <tr><td><strong>Dependabot Alerts</strong></td><td>Matches against GitHub Advisory Database</td><td>Automatic</td></tr>
+        <tr><td><strong>Dependabot Security Updates</strong></td><td>Creates PRs to update vulnerable dependencies</td><td>Semi-automatic</td></tr>
+        <tr><td><strong>Dependabot Version Updates</strong></td><td>Keeps dependencies current on schedule</td><td>Configurable</td></tr>
+        <tr><td><strong>Dependency Review</strong></td><td>PR gate to prevent adding new vulnerabilities</td><td>Automatic</td></tr>
+        <tr><td><strong>Artifact Attestations</strong></td><td>Build provenance and integrity verification (SLSA)</td><td>Workflow</td></tr>
+        <tr><td><strong>SBOM Generation</strong></td><td>Software Bill of Materials for compliance</td><td>Workflow</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 3 — GHAS + MDC                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec3">
+  <h2><span class="section-num">03</span> Secure Across the Stack — GHAS + MDC</h2>
+  <p class="section-lead">GitHub Advanced Security + Microsoft Defender for Cloud = Code-to-Cloud security fabric.</p>
+
+  <h3>Microsoft Defender for Cloud — DevOps Security</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+graph TB
+    subgraph MDC["MICROSOFT DEFENDER FOR CLOUD"]
+        direction TB
+        DSPM["DevOps Security Posture Management"]
+        AGS["Agentless Code Scanning\nZero YAML, zero pipeline changes"]
+        PRA["Pull Request Annotations\nIaC findings in developer workflow"]
+        CSPM["Defender CSPM\nCloud Security Posture Management"]
+        APA["Attack Path Analysis\nChained vulnerability risk"]
+        C2C["Code-to-Cloud Mapping\nSource repo ↔ Cloud workload"]
+    end
+
+    subgraph CONN["Multi-Pipeline Support"]
+        GH["GitHub — Native GitHub App"]
+        ADO["Azure DevOps — Extension"]
+        GL["GitLab — OAuth"]
+    end
+
+    CONN --> MDC
+
+    style MDC fill:#1a0a2e,stroke:#7c3aed,stroke-width:2px,color:#e6edf3
+    style CONN fill:#0c1929,stroke:#3b82f6,stroke-width:2px,color:#e6edf3
+    style DSPM fill:#2d1654,stroke:#7c3aed,color:#e6edf3
+    style AGS fill:#2d1654,stroke:#7c3aed,color:#e6edf3
+    style PRA fill:#2d1654,stroke:#7c3aed,color:#e6edf3
+    style CSPM fill:#2d1654,stroke:#7c3aed,color:#e6edf3
+    style APA fill:#2d1654,stroke:#7c3aed,color:#e6edf3
+    style C2C fill:#2d1654,stroke:#7c3aed,color:#e6edf3
+    </pre>
+  </div>
+
+  <h4>Agentless Code Scanning</h4>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Scanner</th><th>Target</th><th>Language / Framework</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bandit</strong></td><td>Application code</td><td>Python</td></tr>
+        <tr><td><strong>ESLint</strong> (security rules)</td><td>Application code</td><td>JavaScript / TypeScript</td></tr>
+        <tr><td><strong>Checkov</strong></td><td>IaC</td><td>Terraform, Kubernetes, Dockerfile, ARM, Bicep, CloudFormation</td></tr>
+        <tr><td><strong>Template Analyzer</strong></td><td>IaC</td><td>ARM, Bicep</td></tr>
+        <tr><td><strong>Trivy</strong></td><td>Dependencies</td><td>OS packages and repo manifests (npm, pip, Maven, NuGet, Go, Cargo)</td></tr>
+        <tr><td><strong>Syft</strong></td><td>SBOM</td><td>Generates dependency inventory across 30+ ecosystems</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Code-to-Cloud Mapping &amp; Attack Path Analysis</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+graph LR
+    A["GitHub Repo\nSQL Injection in /src/api\nCodeQL finding"] -->|builds| B["Container Image\nVulnerable base image\nRegistry scan"]
+    B -->|deploys to| C["AKS Pod\nInternet exposed\nSensitive data access"]
+    C --> D["ATTACK PATH\nCRITICAL 9.8"]
+    D --> E["Internet Exposure"]
+    D --> F["Sensitive Data"]
+    D --> G["Code Vuln + Unpatched Base"]
+    D --> H["Lateral Movement"]
+
+    style A fill:#4a1530,stroke:#e11d48,stroke-width:2px,color:#e6edf3
+    style B fill:#42290a,stroke:#d97706,stroke-width:2px,color:#e6edf3
+    style C fill:#4a1530,stroke:#e11d48,stroke-width:2px,color:#e6edf3
+    style D fill:#4a1042,stroke:#db2777,stroke-width:3px,color:#e6edf3
+    style E fill:#3d0f1e,stroke:#f43f5e,color:#e6edf3
+    style F fill:#3d0f1e,stroke:#f43f5e,color:#e6edf3
+    style G fill:#3d0f1e,stroke:#f43f5e,color:#e6edf3
+    style H fill:#3d0f1e,stroke:#f43f5e,color:#e6edf3
+    </pre>
+  </div>
+
+  <h3>GHAS + MDC Integration Architecture</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+graph TB
+    subgraph DEV["DEVELOPER INNER LOOP"]
+        IDE["IDE + Copilot"] --> PUSH["git push\n+ Push Protection"]
+        PUSH --> PR["Pull Request\n+ Code Review"]
+        PR --> CICD["CI/CD Pipeline"]
+    end
+
+    subgraph GHAS["GITHUB ADVANCED SECURITY"]
+        SP["Secret Protection\n+ Push Protection"]
+        CS["CodeQL Code Scanning\n+ Copilot Autofix"]
+        DEP["Dependabot\nSupply Chain Security"]
+        SC["Security Campaigns"]
+    end
+
+    subgraph BRIDGE["GHAS + MDC INTEGRATION"]
+        C2C["Bidirectional Sync\nAlerts, Context, Fix Status"]
+    end
+
+    subgraph MDCS["MICROSOFT DEFENDER FOR CLOUD"]
+        DSPM["DevOps Security\nPosture Mgmt"]
+        AGS["Agentless Code\n+ IaC Scanning"]
+        CSPM["Defender CSPM\n+ Attack Paths"]
+        PRA["PR Annotations"]
+    end
+
+    subgraph CLOUD["CLOUD WORKLOADS"]
+        RC["Runtime Context\nInternet, Data, Identity, Network"]
+    end
+
+    DEV --> GHAS
+    GHAS --> BRIDGE
+    BRIDGE --> MDCS
+    MDCS --> CLOUD
+
+    style DEV fill:#0c1929,stroke:#3b82f6,stroke-width:2px,color:#e6edf3
+    style GHAS fill:#1a1540,stroke:#4f46e5,stroke-width:2px,color:#e6edf3
+    style BRIDGE fill:#0a2e1e,stroke:#059669,stroke-width:3px,color:#e6edf3
+    style MDCS fill:#1a0a2e,stroke:#7c3aed,stroke-width:2px,color:#e6edf3
+    style CLOUD fill:#0a1e2e,stroke:#0ea5e9,stroke-width:2px,color:#e6edf3
+    </pre>
+  </div>
+
+  <h3>Production-Aware Alert Prioritization</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Risk Factor</th><th>Source</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Internet Exposure</strong></td><td>MDC Network Analysis</td><td>+Critical if public-facing</td></tr>
+        <tr><td><strong>Sensitive Data Access</strong></td><td>MDC Data Classification</td><td>+High if PII/financial data</td></tr>
+        <tr><td><strong>Critical Resource</strong></td><td>MDC Resource Tags</td><td>+High if production workload</td></tr>
+        <tr><td><strong>Lateral Movement</strong></td><td>MDC Attack Path Analysis</td><td>+Critical if pivot point</td></tr>
+        <tr><td><strong>Identity Risk</strong></td><td>MDC Identity Analysis</td><td>+High if over-permissioned</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Licensing Requirements</h4>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Feature</th><th>Required License</th></tr></thead>
+      <tbody>
+        <tr><td>GHAS Code Scanning (CodeQL)</td><td>GitHub Code Security</td></tr>
+        <tr><td>GHAS Secret Scanning + Push Protection</td><td>GitHub Secret Protection</td></tr>
+        <tr><td>Copilot Autofix</td><td>GitHub Code Security (included)</td></tr>
+        <tr><td>Copilot Coding Agent</td><td>Any paid GitHub Copilot plan</td></tr>
+        <tr><td>MDC DevOps Security (basic)</td><td>Defender for Cloud (Free tier)</td></tr>
+        <tr><td>MDC Agentless Scanning + PR Annotations</td><td>Defender CSPM</td></tr>
+        <tr><td>MDC Attack Path Analysis</td><td>Defender CSPM</td></tr>
+        <tr><td>GHAS + MDC Native Integration</td><td>GitHub Code Security + Defender CSPM</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 4 — AGENTIC AI                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec4">
+  <h2><span class="section-num">04</span> Agentic AI for DevSecOps</h2>
+  <p class="section-lead">AI-powered agents operating as members of your dev team — automate, optimize, and secure every stage of the SDLC.</p>
+
+  <h3>The Agentic Evolution</h3>
+  <blockquote><strong>📊 Developers spend only ~20% of their time writing code.</strong> The other 80% goes to planning, securing, governing, and maintaining. Agentic AI reclaims that 80% by embedding autonomous agents across the entire lifecycle.</blockquote>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Dimension</th><th>Without Agents</th><th>With Agents</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Competence</strong> — What they know</td><td>Limited to individual expertise</td><td>AI provides security knowledge on-demand</td></tr>
+        <tr><td><strong>Capability</strong> — What they can do</td><td>Constrained by tooling familiarity</td><td>Agents detect, explain, fix, and validate</td></tr>
+        <tr><td><strong>Capacity</strong> — How much they can do</td><td>Bounded by human hours</td><td>Agents work in parallel, asynchronously</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+graph TB
+    subgraph BEFORE["TRADITIONAL DevSecOps"]
+        B1["Manual code review"]
+        B2["Security team bottleneck"]
+        B3["Delayed remediation\nweeks / months"]
+        B4["Skill gaps block adoption"]
+    end
+
+    subgraph AFTER["AGENTIC DevSecOps"]
+        A1["AI agents detect & fix\nin real-time"]
+        A2["Security embedded in\ndeveloper workflow"]
+        A3["Immediate remediation\nminutes / hours"]
+        A4["Just-in-time education"]
+    end
+
+    BEFORE -->|"Agentic Transformation"| AFTER
+
+    style BEFORE fill:#4a1530,stroke:#e11d48,stroke-width:2px,color:#e6edf3
+    style AFTER fill:#0a2e1e,stroke:#059669,stroke-width:2px,color:#e6edf3
+    </pre>
+  </div>
+
+  <h3>GitHub Copilot Coding Agent</h3>
+  <p><strong>Generally available since May 19, 2025</strong> for all paid Copilot subscribers. Operates as an autonomous team member.</p>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+flowchart TD
+    A["Assign GitHub Issue\nto Copilot"] --> B["👀 Agent starts\nSecure sandbox via\nGitHub Actions"]
+    B --> C["Clones repo → Sets up env\n→ Analyzes with RAG"]
+    C --> D["Edits → Builds → Tests\nPushes to draft PR"]
+    D --> E["Requests human review\nResponds to PR comments"]
+    E --> F["Human approves\n→ CI/CD → Merged"]
+
+    style A fill:#1e1b4b,stroke:#4f46e5,color:#e6edf3
+    style B fill:#3b0764,stroke:#7c3aed,color:#e6edf3
+    style C fill:#1e293b,stroke:#64748b,color:#e6edf3
+    style D fill:#1e293b,stroke:#64748b,color:#e6edf3
+    style E fill:#78350f,stroke:#d97706,color:#e6edf3
+    style F fill:#064e3b,stroke:#059669,stroke-width:2px,color:#e6edf3
+    </pre>
+  </div>
+
+  <h4>Built-in Security Policies</h4>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Policy</th><th>Protection</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Branch restrictions</strong></td><td>Agent can only push to branches it created</td></tr>
+        <tr><td><strong>Review enforcement</strong></td><td>Requester cannot approve the agent's PR</td></tr>
+        <tr><td><strong>Network isolation</strong></td><td>Internet access limited to trusted destinations (customizable)</td></tr>
+        <tr><td><strong>CI/CD gating</strong></td><td>Actions workflows require human approval before running</td></tr>
+        <tr><td><strong>Existing rules apply</strong></td><td>Repository rulesets and org policies fully enforced</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Custom Security Agents</h3>
+  <p>Specialized versions of the Copilot coding agent tailored to security workflows:</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🛡️</span>
+      <h4>Security Main Agent</h4>
+      <p>Reviews repository for security issues and produces a comprehensive security report</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔍</span>
+      <h4>Security Code Review Agent</h4>
+      <p>Security-focused code reviewer checking for common vulnerabilities (CWEs)</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📋</span>
+      <h4>Security Plan Creation Agent</h4>
+      <p>Threat modelling and security architecture with framework expertise</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚙️</span>
+      <h4>Security Pipeline Agent</h4>
+      <p>Detects CI workflow weaknesses, auto-patches GitHub Actions &amp; Azure DevOps YAML</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏗️</span>
+      <h4>Security IaC Agent</h4>
+      <p>Finds insecure defaults and misconfigurations across IaC and cloud configs</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📦</span>
+      <h4>Security Supply Chain Agent</h4>
+      <p>Detects secret leaks, dependency risks, and repo misconfigurations with PR-ready fixes</p>
+    </div>
+  </div>
+
+  <h3>End-to-End Agentic Architecture</h3>
+
+  <div class="mermaid-wrapper">
+    <pre class="mermaid">
+graph TB
+    subgraph PREVENT["🔒 PREVENT"]
+        P1["Secret Protection\nPush Protection"]
+        P2["Copilot Secret Scanning\nAI-powered detection"]
+        P3["Custom Security Agents\nPre-commit in VS Code"]
+    end
+
+    subgraph DETECT["🔍 DETECT"]
+        D1["CodeQL Code Scanning"]
+        D2["MDC Agentless Scanning"]
+        D3["Dependabot"]
+        D4["MDC PR Annotations"]
+    end
+
+    subgraph FIX["🔧 FIX"]
+        F1["Copilot Autofix"]
+        F2["Copilot Coding Agent"]
+        F3["Security Campaigns"]
+        F4["Custom Security Agents"]
+    end
+
+    subgraph MONITOR["📊 MONITOR"]
+        M1["Defender CSPM\nAttack Paths"]
+        M2["Code-to-Cloud Mapping"]
+        M3["Security Overview\nDashboard"]
+        M4["Audit Logs → SIEM"]
+    end
+
+    PREVENT --> DETECT --> FIX --> MONITOR
+    MONITOR -->|"Runtime context\nenriches prioritization"| DETECT
+
+    style PREVENT fill:#0a2e1e,stroke:#059669,stroke-width:2px,color:#e6edf3
+    style DETECT fill:#0c1929,stroke:#4f46e5,stroke-width:2px,color:#e6edf3
+    style FIX fill:#1a0a2e,stroke:#7c3aed,stroke-width:2px,color:#e6edf3
+    style MONITOR fill:#2e1f0a,stroke:#d97706,stroke-width:2px,color:#e6edf3
+    </pre>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 5 — BLUEPRINT                                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec5">
+  <h2><span class="section-num">05</span> DevSecOps Blueprint</h2>
+  <p class="section-lead">Complete tooling matrix and maturity model for implementing Agentic DevSecOps at scale.</p>
+
+  <h3>DevSecOps Tooling Matrix</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Category</th><th>Guideline</th><th>Tools &amp; Capabilities</th><th>Automation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Secrets Scanning</strong></td><td>Detect and prevent hard-coded secrets</td><td>GitHub Secret Protection, Push Protection, Copilot Secret Scanning, Custom Patterns</td><td>Automatic</td></tr>
+        <tr><td><strong>SCA</strong></td><td>Manage dependency risks</td><td>Dependabot, Dependency Review, Artifact Attestations, SBOM, OpenSSF Scorecard, SLSA</td><td>Workflow / Auto</td></tr>
+        <tr><td><strong>SAST</strong></td><td>Detect code vulnerabilities</td><td>CodeQL (Default &amp; Advanced), Copilot Autofix, 3rd Party SARIF</td><td>Workflow / Auto</td></tr>
+        <tr><td><strong>IaC Scanning</strong></td><td>Secure infrastructure configs</td><td>MSDO: Checkov, Template Analyzer, Terrascan, Trivy</td><td>Workflow</td></tr>
+        <tr><td><strong>CIS</strong></td><td>Secure container supply chain</td><td>MSDO: Checkov, Terrascan, Trivy, Anchore Grype</td><td>Workflow</td></tr>
+        <tr><td><strong>DAST</strong></td><td>Test running applications</td><td>OWASP ZAP (maintained by Checkmarx)</td><td>Workflow</td></tr>
+        <tr><td><strong>Continuous Scanning</strong></td><td>Runtime posture monitoring</td><td>Microsoft Defender for Cloud, Sentinel, Azure Policy</td><td>Workflow / Auto</td></tr>
+        <tr><td><strong>Compliance</strong></td><td>Governance &amp; audit</td><td>GHAS Security Configurations (Policy-as-Code), Delegated Bypass, Audit Logs</td><td>Enforced</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Shift-Left Security Maturity Model</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Level</th><th>Practice</th><th>Tools</th></tr></thead>
+      <tbody>
+        <tr><td><strong>L1 — Reactive</strong></td><td>Manual security reviews</td><td>Ad-hoc scanning</td></tr>
+        <tr><td><strong>L2 — Automated</strong></td><td>CI/CD-integrated scanning</td><td>CodeQL default setup, Dependabot</td></tr>
+        <tr><td><strong>L3 — Proactive</strong></td><td>Push protection, PR gates</td><td>Secret scanning push protection, CodeQL PR checks</td></tr>
+        <tr><td><strong>L4 — Contextual</strong></td><td>Runtime-aware prioritization</td><td>GHAS + MDC, attack path analysis</td></tr>
+        <tr><td><strong>L5 — Agentic</strong></td><td>AI-powered autonomous security</td><td>Copilot Autofix, Coding Agent, Campaigns, Custom Agents</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Recommended Rollout</h3>
+  <div class="phase-grid">
+    <div class="phase-card p1">
+      <div class="phase-num">Phase 1 — Foundation</div>
+      <h4>Enable &amp; Connect</h4>
+      <ul>
+        <li>Enable GHAS on all repos</li>
+        <li>Connect GitHub to MDC</li>
+        <li>Enable secret scanning + push protection</li>
+        <li>Configure Dependabot</li>
+      </ul>
+    </div>
+    <div class="phase-card p2">
+      <div class="phase-num">Phase 2 — Hardening</div>
+      <h4>Strengthen &amp; Enforce</h4>
+      <ul>
+        <li>Advanced CodeQL for critical repos</li>
+        <li>Agentless scanning in MDC</li>
+        <li>PR annotations + delegated bypass</li>
+        <li>MSDO workflow integration</li>
+      </ul>
+    </div>
+    <div class="phase-card p3">
+      <div class="phase-num">Phase 3 — Intelligence</div>
+      <h4>Contextualize &amp; Campaign</h4>
+      <ul>
+        <li>GHAS + MDC native integration</li>
+        <li>Attack path analysis</li>
+        <li>Security campaigns</li>
+        <li>Copilot Autofix on all repos</li>
+      </ul>
+    </div>
+    <div class="phase-card p4">
+      <div class="phase-num">Phase 4 — Agentic</div>
+      <h4>Automate &amp; Scale</h4>
+      <ul>
+        <li>Copilot Coding Agent for security</li>
+        <li>Custom security agents</li>
+        <li>Audit logs to SIEM</li>
+        <li>Track debt reduction KPIs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 6 — TAKEAWAYS                                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec6">
+  <h2><span class="section-num">06</span> Key Takeaways &amp; Call to Action</h2>
+  <p class="section-lead">Agentic DevSecOps — where we're going and how to get started.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-icon">🤖</span>
+      <h4>Agentic DevSecOps is Essential</h4>
+      <p>For building secure AI apps and agents at scale — security as a first-class citizen of every workflow</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔗</span>
+      <h4>GHAS + GHCP + MDC</h4>
+      <p>Together provide a comprehensive code-to-cloud security fabric — bidirectional, contextual, AI-driven</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚡</span>
+      <h4>3–12× Faster Remediation</h4>
+      <p>Copilot Autofix and the Coding Agent dramatically reduce manual remediation effort</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📐</span>
+      <h4>Scalable Blueprint</h4>
+      <p>Operationalize application security at scale while maintaining development velocity</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔄</span>
+      <h4>Reusable Patterns</h4>
+      <p>Proven guidelines to detect secrets, dependencies, and code vulnerabilities automatically</p>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Which DevSecOps agents will you be creating?</h3>
+    <p>Shift security left · Leverage agentic AI · Accelerate secure innovation · Reduce security debt</p>
+    <p style="margin-top: 20px;">
+      <strong>Demo repo:</strong>
+      <a href="https://github.com/githubabcs-devops/gh-advsec-devsecops" target="_blank">githubabcs-devops/gh-advsec-devsecops</a>
+    </p>
+  </div>
+
+  <h3>Demo: What Was Demonstrated</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>#</th><th>Scenario</th><th>Tools in Action</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Secret detected &amp; blocked</strong> — Push protection preventing a GitHub PAT from being committed</td><td>GitHub Secret Protection, Push Protection</td></tr>
+        <tr><td>2</td><td><strong>Copilot Autofix in action</strong> — SQL injection fixed in &lt;30 seconds with one-click apply</td><td>CodeQL, Copilot Autofix</td></tr>
+        <tr><td>3</td><td><strong>Custom security agent</strong> — Security IaC Agent finding misconfigured Kubernetes RBAC</td><td>Custom Agents, VS Code</td></tr>
+        <tr><td>4</td><td><strong>Security campaign dashboard</strong> — Org-wide XSS remediation campaign</td><td>Security Campaigns, Copilot Autofix</td></tr>
+        <tr><td>5</td><td><strong>MDC code-to-cloud</strong> — Tracing a code vulnerability to its internet-exposed runtime</td><td>Defender CSPM, Attack Path Analysis</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 7 — REFERENCES                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="sec7">
+  <h2><span class="section-num">07</span> References</h2>
+  <p class="section-lead">All sources used in this guide — grounded in public GitHub, Microsoft, and industry documentation.</p>
+
+  <h3>GitHub Documentation</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Resource</th><th>URL</th></tr></thead>
+      <tbody>
+        <tr><td>About GitHub Advanced Security</td><td><a href="https://docs.github.com/en/get-started/learning-about-github/about-github-advanced-security" target="_blank">docs.github.com</a></td></tr>
+        <tr><td>GHAS Product Restructure (March 2025)</td><td><a href="https://github.blog/changelog/2025-03-04-introducing-github-secret-protection-and-github-code-security/" target="_blank">github.blog/changelog</a></td></tr>
+        <tr><td>CodeQL Documentation</td><td><a href="https://codeql.github.com/docs/" target="_blank">codeql.github.com</a></td></tr>
+        <tr><td>Copilot Autofix — Found Means Fixed</td><td><a href="https://github.blog/security/vulnerability-research/found-means-fixed-introducing-code-scanning-autofix-powered-by-github-copilot-and-codeql/" target="_blank">github.blog</a></td></tr>
+        <tr><td>Copilot Coding Agent (GA)</td><td><a href="https://github.blog/news-insights/product-news/github-copilot-meet-the-new-coding-agent/" target="_blank">github.blog</a></td></tr>
+        <tr><td>Copilot — The Agent Awakens</td><td><a href="https://github.blog/news-insights/product-news/github-copilot-the-agent-awakens/" target="_blank">github.blog</a></td></tr>
+        <tr><td>About Custom Agents</td><td><a href="https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-custom-agents" target="_blank">docs.github.com</a></td></tr>
+        <tr><td>Secret Scanning Documentation</td><td><a href="https://docs.github.com/en/code-security/secret-scanning" target="_blank">docs.github.com</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Microsoft Documentation</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Resource</th><th>URL</th></tr></thead>
+      <tbody>
+        <tr><td>Defender for Cloud DevOps Security</td><td><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-devops-introduction" target="_blank">learn.microsoft.com</a></td></tr>
+        <tr><td>GHAS Integration with MDC</td><td><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/github-advanced-security-overview" target="_blank">learn.microsoft.com</a></td></tr>
+        <tr><td>Connect GitHub to Defender for Cloud</td><td><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/quickstart-onboard-github" target="_blank">learn.microsoft.com</a></td></tr>
+        <tr><td>Agentless Code Scanning</td><td><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/agentless-code-scanning" target="_blank">learn.microsoft.com</a></td></tr>
+        <tr><td>Attack Path Analysis</td><td><a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-attack-path" target="_blank">learn.microsoft.com</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Industry Reports</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Resource</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Data Breach Investigations Report 2024</td><td>Verizon</td></tr>
+        <tr><td>Cost of a Data Breach Report 2024</td><td>IBM</td></tr>
+        <tr><td>State of Software Security 2024</td><td>Veracode</td></tr>
+        <tr><td>State of DevSecOps Report 2024</td><td>Contrast Security</td></tr>
+        <tr><td>NIST Secure Software Development Framework</td><td>NIST</td></tr>
+        <tr><td>SLSA Framework</td><td>slsa.dev</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p><em>Some features described may be in preview as of April 2026. Always verify with official documentation.</em></p>
+  <p style="margin-top: 12px;">Prepared for Developer Productivity — GitHub Technical Insiders Community Call | April 2, 2026</p>
+  <p>Calin Lupas &amp; Emmanuel Knafo — Sr. Cloud Solution Architects, DevSecOps Advisors, Microsoft Canada</p>
+</div>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'dark',
+  themeVariables: {
+    darkMode: true,
+    background: '#161b22',
+    primaryColor: '#1e1b4b',
+    primaryTextColor: '#e6edf3',
+    primaryBorderColor: '#4f46e5',
+    lineColor: '#58a6ff',
+    secondaryColor: '#3b0764',
+    tertiaryColor: '#064e3b',
+    fontFamily: 'Inter, -apple-system, sans-serif',
+    fontSize: '14px'
+  },
+  flowchart: {
+    htmlLabels: true,
+    curve: 'basis',
+    padding: 15,
+    nodeSpacing: 50,
+    rankSpacing: 50
+  }
+});
+</script>
+</body>
+</html>
