@@ -1,0 +1,213 @@
+@page
+@model DevSecOps4088Model
+@{
+    ViewData["Title"] = "DevSecOps Demo 4088 - Latest GHAS Updates";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-primary">@ViewData["Title"]</h1>
+            <p class="lead">Exploring the latest GitHub Advanced Security features and DevSecOps best practices</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Alert for demo messages -->
+    @if (TempData["DemoMessage"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["DemoMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Latest GHAS News Section -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-newspaper"></i> Latest GitHub Advanced Security News
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.LatestNews.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var newsItem in Model.LatestNews)
+                            {
+                                <div class="list-group-item d-flex align-items-start">
+                                    <span class="badge bg-success rounded-pill me-3 mt-1">NEW</span>
+                                    <div>
+                                        <p class="mb-1">@newsItem</p>
+                                        <small class="text-muted">Published: @DateTime.Now.ToString("MMMM dd, yyyy")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No news items available.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- New Features Spotlight -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-star"></i> Feature Spotlight
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <h5><i class="bi bi-robot"></i> GitHub Copilot for Security</h5>
+                    <p>AI-powered security analysis directly in your development workflow. Get real-time security suggestions and vulnerability explanations as you code.</p>
+                    
+                    <h5><i class="bi bi-shield-lock"></i> Advanced Secret Scanning</h5>
+                    <p>Now detecting over 200+ secret types with enhanced validity checking. Push protection prevents secrets from ever entering your repository.</p>
+                    
+                    <h5><i class="bi bi-graph-up-arrow"></i> Enhanced Code Scanning</h5>
+                    <p>CodeQL 2.20+ brings improved dataflow analysis, faster query execution, and support for more languages and frameworks.</p>
+                    
+                    <h5><i class="bi bi-shield-check"></i> Supply Chain Security</h5>
+                    <p>Dependency review alerts now include SBOM generation, automated updates, and comprehensive vulnerability remediation guidance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar with Demo Tools -->
+        <div class="col-lg-4">
+            <!-- Security Demo Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Vulnerability Demo
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        ⚠️ <strong>Warning:</strong> This page intentionally contains security vulnerabilities for GHAS demonstration.
+                        These will be detected by GitHub Advanced Security code scanning.
+                    </p>
+                    
+                    <!-- User Input Test Form -->
+                    <form method="post" asp-page-handler="TestUserInput" class="mt-3">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Enter Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   placeholder="Enter username" value="">
+                            <div class="form-text">
+                                ⚠️ Demonstrates log forging vulnerability
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play"></i> Test Input
+                        </button>
+                    </form>
+
+                    <!-- Regex Test Form -->
+                    <form method="post" asp-page-handler="TestRegex" class="mt-4">
+                        <div class="mb-3">
+                            <label for="pattern" class="form-label">Test Regex Pattern:</label>
+                            <input type="text" class="form-control" id="pattern" name="pattern" 
+                                   placeholder="e.g., aaaa" value="">
+                            <div class="form-text">
+                                ⚠️ Vulnerable to ReDoS attacks
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-play"></i> Test Pattern
+                        </button>
+                    </form>
+
+                    <!-- SQL Query Test Form -->
+                    <form method="post" asp-page-handler="TestQuery" class="mt-4">
+                        <div class="mb-3">
+                            <label for="searchTerm" class="form-label">Search Term:</label>
+                            <input type="text" class="form-control" id="searchTerm" name="searchTerm" 
+                                   placeholder="Enter search term" value="">
+                            <div class="form-text">
+                                ⚠️ SQL injection vulnerability demo
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="card-title mb-0">Resources</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="https://github.blog/security/" class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i class="bi bi-newspaper"></i> GitHub Security Blog
+                        </a>
+                        <a href="https://docs.github.com/en/code-security" class="btn btn-outline-secondary btn-sm" target="_blank">
+                            <i class="bi bi-book"></i> Security Documentation
+                        </a>
+                        <a href="https://github.com/security" class="btn btn-outline-success btn-sm" target="_blank">
+                            <i class="bi bi-shield-check"></i> Security Features
+                        </a>
+                        <a href="https://gh.io/advanced-security" class="btn btn-outline-warning btn-sm" target="_blank">
+                            <i class="bi bi-star"></i> GHAS Overview
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-light" role="alert">
+                <h5 class="alert-heading">
+                    <i class="bi bi-lightbulb"></i> DevSecOps Best Practices
+                </h5>
+                <p>
+                    This demo page showcases common security vulnerabilities that GitHub Advanced Security can detect:
+                </p>
+                <ul>
+                    <li>Log injection and log forging vulnerabilities</li>
+                    <li>Regular Expression Denial of Service (ReDoS) patterns</li>
+                    <li>Hardcoded credentials and secrets</li>
+                    <li>SQL injection vulnerabilities</li>
+                    <li>Insecure deserialization patterns</li>
+                </ul>
+                <hr>
+                <p class="mb-0">
+                    Enable <a href="https://github.com/features/security" target="_blank">GitHub Advanced Security</a> 
+                    to automatically detect and remediate these security issues in your codebase.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Auto-dismiss alerts after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+}
