@@ -183,7 +183,7 @@ jobs:
       # Deploy to Azure Web apps
       - name: "Run Azure webapp deploy action using publish profile credentials"
         if: false # This disables the action
-        uses: azure/webapps-deploy@8db8b8d14f21b245e6706fd0607244e354884697 # v3
+        uses: azure/webapps-deploy@45c7df8f6a4fe841b67ff88920b33f4f8328f8d9 # v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
           package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/webapp01/bin/publish"
@@ -199,7 +199,7 @@ jobs:
           docker push ${{ env.AZURE_ACR_NAME }}.azurecr.io/webapp01:latest
 
       - name: Azure Web Apps Deploy
-        uses: azure/webapps-deploy@8db8b8d14f21b245e6706fd0607244e354884697 # v3
+        uses: azure/webapps-deploy@45c7df8f6a4fe841b67ff88920b33f4f8328f8d9 # v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           images: "${{ env.AZURE_ACR_NAME }}.azurecr.io/webapp01:${{ github.sha }}"
